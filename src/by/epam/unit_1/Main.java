@@ -3,12 +3,12 @@ package by.epam.unit_1;
 import java.math.BigInteger;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        task17();
+        task19(151312.91928848, 50.155217748711);
     }
     // Task01: Найдите значение функции: z = ((a - 3) * b / 2) + c
 
@@ -209,5 +209,54 @@ public class Main {
             char c = (char) i;
             System.out.println(i + ": " + c);
         }
+    }
+
+    /* Task18: Для каждого натурального числа в промежутке от m до n вывести все делители, кроме единицы и самого числа.
+    m и n вводятся с клавиатуры.
+     */
+
+    static void task18() {
+        int m, n;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter m: ");
+        m = scanner.nextInt();
+        System.out.print("Enter n: ");
+        n = scanner.nextInt();
+
+        if (m < 1) {
+            m = 1;
+        }
+
+        for (int i = m; i < n + 1; i++) {
+            List<Integer> list = new ArrayList<>();
+            for (int j = 2; j < i; j++) {
+                if (i % j == 0) {
+                    list.add(j);
+                }
+            }
+            if (list.isEmpty()) {
+                System.out.println(i + ": ");
+            } else {
+                System.out.println(i + ": " + list);
+            }
+        }
+    }
+
+    // Task19: Даны два числа. Определить цифры входящие в запись как первого так и второго числа.
+
+    static void task19(double a, double b) {
+        String aStr = Double.toString(a);
+        String bStr = Double.toString(b);
+        HashSet<Character> set = new HashSet<>();
+
+        for (int i = 0; i < aStr.length(); i++) {
+            for (int j = 0; j < bStr.length(); j++) {
+                if (aStr.charAt(i) == bStr.charAt(j) && aStr.charAt(i) != '.') {
+                    set.add(aStr.charAt(i));
+                }
+            }
+        }
+        System.out.println(set);
     }
 }
