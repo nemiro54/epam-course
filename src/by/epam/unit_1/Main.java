@@ -3,12 +3,10 @@ package by.epam.unit_1;
 import java.math.BigInteger;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
-
     public static void main(String[] args) {
-        task17();
     }
     // Task01: Найдите значение функции: z = ((a - 3) * b / 2) + c
 
@@ -117,7 +115,7 @@ public class Main {
 
     // Task11: Вычислить значение функции.
 
-    static void task11(double x) {
+    static double task11(double x) {
         double result;
 
         if (x <= 3) {
@@ -125,20 +123,20 @@ public class Main {
         } else {
             result = 1 / (Math.pow(x, 3) + 6);
         }
-        System.out.println(result);
+        return result;
     }
 
     /* Task12: Напишите программу, где пользователь вводит любое целое положительное число, а программа
     суммирует все числа от 1 до введенного пользователем числа.
      */
 
-    static void task12() {
+    static int task12() {
         Scanner scanner = new Scanner(System.in);
         int number;
         int result = 0;
 
         while (true) {
-            System.out.println("Enter a positive number");
+            System.out.print("Enter a positive number: ");
             number = scanner.nextInt();
 
             if (number <= 0) {
@@ -152,7 +150,7 @@ public class Main {
             result += i;
         }
 
-        System.out.println(String.format("Sum is: %d", result));
+        return result;
     }
 
     //Task13: Вычислить значение функции y = {x, x > 2; y = -x, x <=2} на отрезке [a, b] с шагом h.
@@ -171,35 +169,38 @@ public class Main {
 
     // Task14: Найти сумму квадратов первых ста чисел
 
-    static void task14() {
+    static int task14() {
         int result = 0;
 
         for (int i = 0; i <= 100; i++) {
             result += Math.pow(i, 2);
         }
+        return result;
     }
 
     // Task15: Составить программу нахождения произведения квадратов первых двухсот чисел
 
-    static void task15() {
+    static BigInteger task15() {
         BigInteger result = BigInteger.valueOf(1);
 
         for (int i = 1; i <= 200; i++) {
             result = result.multiply(BigInteger.valueOf((long) Math.pow(i, 2)));
         }
+        return result;
     }
 
     /* Task16: Даны числовой ряд и некоторое число е. Найти сумму тех членов ряда, модуль которых больше или равен
     заданному е. Общий член ряда имеет вид: a = 1 / 2^n + 1 / 3^n
      */
 
-    static void task16(double e, double n) { // n - первый член ряда
+    static double task16(double e, double n) { // n - первый член ряда
         double sum = 0;
 
         while (Math.abs(1 / Math.pow(2, n) + 1 / Math.pow(3, n)) >= e) {
             sum += Math.abs(1 / Math.pow(2, n) + 1 / Math.pow(3, n));
             n++;
         }
+        return sum;
     }
 
     // Task17: Вывести на экран соответствие между символами и их численными обозначениями в памяти компьютера
@@ -209,5 +210,54 @@ public class Main {
             char c = (char) i;
             System.out.println(i + ": " + c);
         }
+    }
+
+    /* Task18: Для каждого натурального числа в промежутке от m до n вывести все делители, кроме единицы и самого числа.
+    m и n вводятся с клавиатуры.
+     */
+
+    static void task18() {
+        int m, n;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter m: ");
+        m = scanner.nextInt();
+        System.out.print("Enter n: ");
+        n = scanner.nextInt();
+
+        if (m < 1) {
+            m = 1;
+        }
+
+        for (int i = m; i < n + 1; i++) {
+            List<Integer> list = new ArrayList<>();
+            for (int j = 2; j < i; j++) {
+                if (i % j == 0) {
+                    list.add(j);
+                }
+            }
+            if (list.isEmpty()) {
+                System.out.println(i + ": ");
+            } else {
+                System.out.println(i + ": " + list);
+            }
+        }
+    }
+
+    // Task19: Даны два числа. Определить цифры входящие в запись как первого так и второго числа.
+
+    static HashSet<Character> task19(double a, double b) {
+        String aStr = Double.toString(a);
+        String bStr = Double.toString(b);
+        HashSet<Character> set = new HashSet<>();
+
+        for (int i = 0; i < aStr.length(); i++) {
+            for (int j = 0; j < bStr.length(); j++) {
+                if (aStr.charAt(i) == bStr.charAt(j) && aStr.charAt(i) != '.') {
+                    set.add(aStr.charAt(i));
+                }
+            }
+        }
+        return set;
     }
 }
