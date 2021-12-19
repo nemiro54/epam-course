@@ -258,4 +258,39 @@ public class Main {
         }
         return matrix;
     }
+
+    // task16: Сформировать квадратную матрицу порядка n по заданному образцу (n - четное).
+
+    static int[][] task16(int n) {
+        int[][] matrix = new int[n][n];
+
+        for (int i = 0; i < matrix.length / 2; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                if (j >= i && j < (n - i)) {
+                    matrix[i][j] = 1;
+                    matrix[n - i - 1][j] = 1;
+                }
+            }
+        }
+        return matrix;
+    }
+
+    /* task17: Сформировать квадратную матрицу порядка N по правилу: A[I, J] = sin((I^2 - J^2) / N) и подсчитать
+    количество положительных элементов в ней.
+     */
+
+    static int task17(int n) {
+        double[][] matrix = new double[n][n];
+        int countPositiveNumber = 0;
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix.length; j++) {
+                matrix[i][j] = Math.sin((Math.pow(i, 2) - Math.pow(j, 2)) / n);
+                if (matrix[i][j] > 0) {
+                    countPositiveNumber++;
+                }
+            }
+        }
+        return countPositiveNumber;
+    }
 }
