@@ -1,6 +1,6 @@
 package by.epam.unit_2;
 
-import java.util.Arrays;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,9 +26,9 @@ public class Main {
     static int task01(int[] A, int K) {
         int count = 0;
 
-        for (int i = 0; i < A.length; i++) {
-            if(A[i] % K == 0) {
-                count += A[i];
+        for (int element : A) {
+            if (element % K == 0) {
+                count += element;
             }
         }
         return count;
@@ -59,10 +59,10 @@ public class Main {
         int countNegativeNumber = 0;
         int countZeroNumber = 0;
 
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] > 0) {
+        for (double element : array) {
+            if (element > 0) {
                 countPositiveNumber++;
-            } else if (array[i] < 0) {
+            } else if (element < 0) {
                 countNegativeNumber++;
             } else {
                 countZeroNumber++;
@@ -189,7 +189,7 @@ public class Main {
      */
 
     static int[] task10(int[] array) {
-        for (int i = 0; i < array.length / 2; i ++) {
+        for (int i = 0; i < array.length / 2; i++) {
             array[i] = array[i * 2];
         }
         Arrays.fill(array, array.length / 2, array.length - 1, 0);
@@ -292,5 +292,212 @@ public class Main {
             }
         }
         return countPositiveNumber;
+    }
+
+    /* task18: В числовой матрице поменять местами два столбца, т.е. все элементы одного столбца посавить на соответствующие
+    им позиции другого, а его элементы второго переместить в первый. Номера столбцов вводит пользователь с клавиатуры.
+     */
+    static void task18(int[][] matrix) {
+        Scanner scanner = new Scanner(System.in);
+        int firstColumn = scanner.nextInt();
+        int secondColumn = scanner.nextInt();
+
+        for (int i = 0; i < matrix.length; i++) {
+            int tmp = matrix[i][firstColumn - 1];
+            matrix[i][firstColumn - 1] = matrix[i][secondColumn - 1];
+            matrix[i][secondColumn - 1] = tmp;
+        }
+    }
+
+    /* task19: Задана матрица неотрицательных чисел. Посчитать сумму элементов в каждом столбце. Определить, какой столбец
+    содержит максимальную сумму.
+     */
+
+    static int task19(int[][] matrix) {
+        int sum = 0;
+        int column = 0;
+
+        for (int i = 0; i < matrix[0].length; i++) {
+            int count =0;
+            for (int j = 0; j < matrix.length; j++) {
+                count += matrix[j][i];
+            }
+            if (count > sum) {
+                sum = count;
+                column = i;
+            }
+        }
+        return column;
+    }
+
+    // task20: Найти положительные элементы главной диагонали квадратной матрицы
+
+    static ArrayList<Integer> task20(int[][] matrix) {
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < matrix.length; i++) {
+            if (matrix[i][i] > 0) {
+                list.add(matrix[i][i]);
+            }
+        }
+        return list;
+    }
+
+    /* task21: Матрицу 10х20 заполнить случайными числами от 0 до 15. Вывести на экран саму матрицу и номера строк,
+    в которых число 5 встречается три и более раз.
+     */
+
+    static void task21(int [][] matrix) {
+        HashSet<Integer> numbersOfString = new HashSet<>();
+        int tmpCount;
+
+        for (int i = 0; i < matrix.length; i++) {
+            tmpCount = 0;
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = (int) (Math.random() * 16);
+                if (matrix[i][j] == 5) {
+                    tmpCount++;
+                }
+                if (tmpCount >= 3) {
+                    numbersOfString.add(i);
+                }
+                System.out.print(matrix[i][j] + "\t");
+            }
+            System.out.println();
+        }
+        System.out.println("Numbers of strings: " + numbersOfString);
+    }
+
+    // task22: Отсортировать строки матрицы по возрастанию и убыванию элементов
+
+    static int[][] task22(int[][] matrix) {
+        int tmp;
+        boolean isSorted = false;
+
+        // сортировка по возрастанию
+        while (!isSorted) {
+            isSorted = true;
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[i].length - 1; j++) {
+                    if (matrix[i][j] > matrix[i][j + 1]) {
+                        isSorted = false;
+
+                        tmp = matrix[i][j];
+                        matrix[i][j] = matrix[i][j + 1];
+                        matrix[i][j + 1] = tmp;
+                    }
+                }
+            }
+        }
+
+        // сортировка по убыванию
+        isSorted = false;
+
+        while (!isSorted) {
+            isSorted = true;
+            for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[i].length - 1; j++) {
+                    if (matrix[i][j] < matrix[i][j + 1]) {
+                        isSorted = false;
+
+                        tmp = matrix[i][j];
+                        matrix[i][j] = matrix[i][j + 1];
+                        matrix[i][j + 1] = tmp;
+                    }
+                }
+            }
+        }
+        return matrix;
+    }
+
+    // task23: Отсортировать столбцы матрицы по возрастанию и убыванию элементов
+
+    static int[][] task23(int[][] matrix) {
+        int tmp;
+        boolean isSorted = false;
+
+        // сортировка по возрастанию
+        while (!isSorted) {
+            isSorted = true;
+            for (int i = 0; i < matrix[0].length; i++) {
+                for (int j = 0; j < matrix.length - 1; j++) {
+                    if (matrix[j][i] > matrix[j + 1][i]) {
+                        isSorted = false;
+
+                        tmp = matrix[j][i];
+                        matrix[j][i] = matrix[j + 1][i];
+                        matrix[j + 1][i] = tmp;
+                    }
+                }
+            }
+        }
+
+        // сортировка по убыванию
+        isSorted = false;
+
+        while (!isSorted) {
+            isSorted = true;
+            for (int i = 0; i < matrix[0].length; i++) {
+                for (int j = 0; j < matrix.length - 1; j++) {
+                    if (matrix[j][i] < matrix[j + 1][i]) {
+                        isSorted = false;
+
+                        tmp = matrix[j][i];
+                        matrix[j][i] = matrix[j + 1][i];
+                        matrix[j + 1][i] = tmp;
+                    }
+                }
+            }
+        }
+        return matrix;
+    }
+
+    /* task24: Сформировать случайную матрицу m * n, состоящую из нулей и единиц, причем в каждом столбце число
+    единиц равно номеру столбца
+     */
+
+    static int[][] task24(int m, int n) {
+        int count; // счетчик единиц
+        int[][] matrix = new int[m][n];
+        Random random = new Random();
+
+        for (int j = 0; j < matrix[0].length; j++) {
+            count = 0;
+            while (count != j) {
+                int i = random.nextInt(matrix.length); // случайный индекс строки
+                if (matrix[i][j] == 0) {
+                    matrix[i][j] = 1;
+                    count++;
+                }
+            }
+        }
+        return matrix;
+    }
+
+    // task25: Найти наибольший элемент матрицы и заменить все нечетные элементы на него
+
+    static int[][] task25(int[][] matrix) {
+        int max = 0;
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                max = Math.max(max, matrix[i][j]);
+            }
+        }
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j += 2) {
+                matrix[i][j] = max;
+            }
+        }
+        return matrix;
+    }
+
+    /* task26: Магическим квадратом порядка n называется квадратная матрица размера n * n, составленная из чисел
+    1, 2, 3, ..., n^2 так, что суммы по каждому столбцу, каждой строке и каждой из двух большиих диагоналей равны между
+    собой. Построить такой квадрат.
+     */
+
+    static void task26(int n) {
     }
 }
