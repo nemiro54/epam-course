@@ -500,4 +500,67 @@ public class Main {
 
     static void task26(int n) {
     }
+
+    /* task27: Заданы два одномерных массива с различным количеством элементов и натуральное число k. Объединить их
+    в один массив, включив второй массив между k - ым и (k + 1) - м элементами первого, при этом не исользуя
+    дополнительный массив.
+     */
+
+    static int[] task27(int[] firstArray, int[] secondArray, int k) {
+        int[] resultArray = new int[firstArray.length + secondArray.length];
+
+        System.arraycopy(firstArray, 0, resultArray, 0, firstArray.length);
+        System.arraycopy(firstArray, k, resultArray, resultArray.length - firstArray.length + k, firstArray.length - k);
+        System.arraycopy(secondArray, 0, resultArray, k, secondArray.length);
+
+        return resultArray;
+    }
+
+    /* task28: Даны две последовательности a1 <= a2 <= ... <= an и b1 <= b2 <= ... bm. Образовать из них новую
+    последовательность чисел так, чтобы она тоже была неубывающей. Дополнительный массив не использовать
+     */
+
+    static int[] task28(int n, int m) {
+        int[] firstArray = new int[n];
+        int[] secondArray = new int[m];
+        int[] resultArray = new int[n + m];
+
+        for (int i = 0; i < firstArray.length; i++) {
+            firstArray[i] = (int) (Math.random() * 100);
+        }
+        Arrays.sort(firstArray);
+        for (int i = 0; i < secondArray.length; i++) {
+            secondArray[i] = (int) (Math.random() * 100);
+        }
+        Arrays.sort(secondArray);
+
+        System.arraycopy(firstArray, 0, resultArray, 0, firstArray.length);
+        System.arraycopy(secondArray, 0, resultArray, n, secondArray.length);
+        Arrays.sort(resultArray);
+
+        return resultArray;
+    }
+
+    // task29: Написать алгоритм сортировки выбором
+
+    static int[] task29(int n) {
+        int tmp;
+        int[] array = new int[n];
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = (int) (Math.random() * 100);
+        }
+        for (int i = 0; i < array.length - 1; i++) {
+            int max = i;
+            for (int j = max + 1; j < array.length; j++) {
+                if (array[j] > array[max]) {
+                    max = j;
+                }
+            }
+            tmp = array[max];
+            array[max] = array[i];
+            array[i] = tmp;
+        }
+        return array;
+    }
 }
