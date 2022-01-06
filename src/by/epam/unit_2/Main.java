@@ -21,6 +21,16 @@ public class Main {
         return true;
     }
 
+    // Метод перестановки чисел местами
+
+    static int[] swap(int[] array, int a, int b) {
+        int tmp = array[a];
+        array[a] = array[b];
+        array[b] = tmp;
+
+        return array;
+    }
+
     // task01: В массив A[N] занесены натуральные числа. Найти сумму тех элементов, которые кратны данному K.
 
     static int task01(int[] A, int K) {
@@ -34,7 +44,8 @@ public class Main {
         return count;
     }
 
-    /* task02: Дана последовательность действительных чисел a1, a2, ..., an. Заменить все ее члены, большие данного Z,
+    /*
+    task02: Дана последовательность действительных чисел a1, a2, ..., an. Заменить все ее члены, большие данного Z,
     этим числом. Подсчитать количество замен.
      */
 
@@ -50,7 +61,8 @@ public class Main {
         return countReplacement;
     }
 
-    /* task03: Дан массив действительных чисел, размерность которого N. Подсчитать, сколько в нем отрицательных, положительных
+    /*
+    task03: Дан массив действительных чисел, размерность которого N. Подсчитать, сколько в нем отрицательных, положительных
     и нулевых элементов.
      */
 
@@ -101,7 +113,8 @@ public class Main {
         }
     }
 
-    /* task06: Задана последовательность N вещественных чисел. Вычислить сумму чисел, порядковые номера которых
+    /*
+    task06: Задана последовательность N вещественных чисел. Вычислить сумму чисел, порядковые номера которых
     являются простыми числами.
      */
 
@@ -127,7 +140,8 @@ public class Main {
         return max;
     }
 
-    /* task08: Дана последовательность целых чисел a1, a2, ..., an. Образовать новую последовательность, выбросив
+    /*
+    task08: Дана последовательность целых чисел a1, a2, ..., an. Образовать новую последовательность, выбросив
     из исходной те члены, которые равны min(a1, a2, ..., an).
      */
 
@@ -155,7 +169,8 @@ public class Main {
         return newNumbers;
     }
 
-    /* task09: В массиве целых чисел с количеством элементов n определить наиболее часто встречающееся число.
+    /*
+    task09: В массиве целых чисел с количеством элементов n определить наиболее часто встречающееся число.
     Если таких чисел несколько, то определить наименьшее из них.
      */
 
@@ -184,7 +199,8 @@ public class Main {
         return resultNumber;
     }
 
-    /* task10: Дан целочисленный массив с количеством элементов n. Сжать массив, выбросив из него каждый второй
+    /*
+    task10: Дан целочисленный массив с количеством элементов n. Сжать массив, выбросив из него каждый второй
     элемент (освободившиеся элементы заполнить нулями). Примечание. Дополнительный массив не использовать.
      */
 
@@ -275,7 +291,8 @@ public class Main {
         return matrix;
     }
 
-    /* task17: Сформировать квадратную матрицу порядка N по правилу: A[I, J] = sin((I^2 - J^2) / N) и подсчитать
+    /*
+    task17: Сформировать квадратную матрицу порядка N по правилу: A[I, J] = sin((I^2 - J^2) / N) и подсчитать
     количество положительных элементов в ней.
      */
 
@@ -294,7 +311,8 @@ public class Main {
         return countPositiveNumber;
     }
 
-    /* task18: В числовой матрице поменять местами два столбца, т.е. все элементы одного столбца посавить на соответствующие
+    /*
+    task18: В числовой матрице поменять местами два столбца, т.е. все элементы одного столбца посавить на соответствующие
     им позиции другого, а его элементы второго переместить в первый. Номера столбцов вводит пользователь с клавиатуры.
      */
     static void task18(int[][] matrix) {
@@ -309,7 +327,8 @@ public class Main {
         }
     }
 
-    /* task19: Задана матрица неотрицательных чисел. Посчитать сумму элементов в каждом столбце. Определить, какой столбец
+    /*
+    task19: Задана матрица неотрицательных чисел. Посчитать сумму элементов в каждом столбце. Определить, какой столбец
     содержит максимальную сумму.
      */
 
@@ -343,7 +362,8 @@ public class Main {
         return list;
     }
 
-    /* task21: Матрицу 10х20 заполнить случайными числами от 0 до 15. Вывести на экран саму матрицу и номера строк,
+    /*
+    task21: Матрицу 10х20 заполнить случайными числами от 0 до 15. Вывести на экран саму матрицу и номера строк,
     в которых число 5 встречается три и более раз.
      */
 
@@ -452,7 +472,8 @@ public class Main {
         return matrix;
     }
 
-    /* task24: Сформировать случайную матрицу m * n, состоящую из нулей и единиц, причем в каждом столбце число
+    /*
+    task24: Сформировать случайную матрицу m * n, состоящую из нулей и единиц, причем в каждом столбце число
     единиц равно номеру столбца
      */
 
@@ -493,15 +514,37 @@ public class Main {
         return matrix;
     }
 
-    /* task26: Магическим квадратом порядка n называется квадратная матрица размера n * n, составленная из чисел
+    /*
+    task26: Магическим квадратом порядка n называется квадратная матрица размера n * n, составленная из чисел
     1, 2, 3, ..., n^2 так, что суммы по каждому столбцу, каждой строке и каждой из двух большиих диагоналей равны между
     собой. Построить такой квадрат.
      */
 
-    static void task26(int n) {
+    static int[][] task26(int n) {
+        int str =  0;
+        int column = n / 2;
+        int[][] magicSquare = new int[n][n];
+
+        for (int i = 1; i <= Math.pow(n, 2); i++) {
+            magicSquare[str][column] = i;
+            if (i % n == 0) {
+                str++;
+            } else {
+                str--;
+                column++;
+                if (str == -1) {
+                    str = n - 1;
+                }
+                if (column == n) {
+                    column = 0;
+                }
+            }
+        }
+        return magicSquare;
     }
 
-    /* task27: Заданы два одномерных массива с различным количеством элементов и натуральное число k. Объединить их
+    /*
+    task27: Заданы два одномерных массива с различным количеством элементов и натуральное число k. Объединить их
     в один массив, включив второй массив между k - ым и (k + 1) - м элементами первого, при этом не исользуя
     дополнительный массив.
      */
@@ -516,40 +559,29 @@ public class Main {
         return resultArray;
     }
 
-    /* task28: Даны две последовательности a1 <= a2 <= ... <= an и b1 <= b2 <= ... bm. Образовать из них новую
+    /*
+    task28: Даны две последовательности a1 <= a2 <= ... <= an и b1 <= b2 <= ... bm. Образовать из них новую
     последовательность чисел так, чтобы она тоже была неубывающей. Дополнительный массив не использовать
      */
 
-    static int[] task28(int n, int m) {
-        int[] firstArray = new int[n];
-        int[] secondArray = new int[m];
-        int[] resultArray = new int[n + m];
-
-        for (int i = 0; i < firstArray.length; i++) {
-            firstArray[i] = (int) (Math.random() * 100);
-        }
-        Arrays.sort(firstArray);
-        for (int i = 0; i < secondArray.length; i++) {
-            secondArray[i] = (int) (Math.random() * 100);
-        }
-        Arrays.sort(secondArray);
+    static int[] task28(int[] firstArray, int[] secondArray) {
+        int[] resultArray = new int[firstArray.length + secondArray.length];
 
         System.arraycopy(firstArray, 0, resultArray, 0, firstArray.length);
-        System.arraycopy(secondArray, 0, resultArray, n, secondArray.length);
+        System.arraycopy(secondArray, 0, resultArray, firstArray.length, secondArray.length);
         Arrays.sort(resultArray);
 
         return resultArray;
     }
 
-    // task29: Написать алгоритм сортировки выбором
+    /*
+    task29: Написать алгоритм сортировки выбором по убыванию. В массиве, начиная с первого, выбирается наибольший
+    элемент и ставится на первое место, а первый - на место наибольшего. Затем, начиная со второго, процедура повторяется
+     */
 
-    static int[] task29(int n) {
+    static int[] task29(int[] array) {
         int tmp;
-        int[] array = new int[n];
 
-        for (int i = 0; i < array.length; i++) {
-            array[i] = (int) (Math.random() * 100);
-        }
         for (int i = 0; i < array.length - 1; i++) {
             int max = i;
             for (int j = max + 1; j < array.length; j++) {
@@ -562,5 +594,136 @@ public class Main {
             array[i] = tmp;
         }
         return array;
+    }
+
+    /*
+    task30: Написать алгоритм сортировки обменами по возрастанию. Для этого сравниваются два соседних числа ai и ai+1.
+    Если ai > ai+1, то делается перестановка. Так продолжается до тех пор. пока все элементы не станут расположены в
+    порядке возрастания. Подсчитать количество перестановок
+     */
+
+    static int[] task30(int[] array) {
+        int tmp;
+        int countPermutations = 0;
+        boolean isSorted = false;
+
+        while (!isSorted) {
+            isSorted = true;
+            for (int i = 0; i < array.length - 1; i++) {
+                if (array[i] > array[i + 1]) {
+                    isSorted = false;
+                    tmp = array[i];
+                    array[i] = array[i + 1];
+                    array[i + 1] = tmp;
+                    countPermutations++;
+                }
+            }
+        }
+        return array;
+    }
+
+    /*
+    task31: Написать алгоритм сортировки вставками по возрастанию. Берется следующее число ai+1 и вставляется
+    в последовательность так, чтобы новая последовательность была тоже возрастающей. Процесс производится до тех пор,
+    пока все элементы от i + 1 до n не будут перебраны. Место помещения очередного элемента в отсортированную часть
+    производить с помощью двоичного поиска. Двоичный поиск оформить в виде отдельной функции.
+     */
+
+    // Метод для целочисленных значений
+
+    static int binarySearch(int[] sortedArray, int key, int low, int high) {
+        int mid;
+        if (low == high) {
+            return low;
+        }
+        mid = low + (high - low) / 2;
+
+        if (key > sortedArray[mid]) {
+            return binarySearch(sortedArray, key, mid + 1, high);
+        } else if (key < sortedArray[mid]) {
+            return binarySearch(sortedArray, key, low, mid);
+        } else {
+            return mid;
+        }
+    }
+
+    // Метод для значений с плавающей точкой
+
+    static int binarySearch(double[] sortedArray, double key, int low, int high) {
+        int mid;
+        if (low == high) {
+            return low;
+        }
+        mid = low + (high - low) / 2;
+
+        if (key > sortedArray[mid]) {
+            return binarySearch(sortedArray, key, mid + 1, high);
+        } else if (key < sortedArray[mid]) {
+            return binarySearch(sortedArray, key, low, mid);
+        } else {
+            return mid;
+        }
+    }
+
+    static int[] task31(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            int element = binarySearch(array, array[i], 0, i);
+            if (element < i) {
+                int tmp = array[i];
+                for (int j = i - 1; j >= element; j--) {
+                    array[j + 1] = array[j];
+                }
+                array[element] = tmp;
+            }
+        }
+        return array;
+    }
+
+    /*
+    task32: Сортировка Шелла. Дан массив n действительных чисел. Требуется упорядочить его по возрастанию.
+    Сравниваются два соседних элемента. Если ai <= ai+1, то продвигаютяся на один элемент вперед. Если ai > ai+1,
+    то производится перестановка и сдигаются на один элемент назад.
+     */
+
+    static int[] task32(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i] > array[i + 1]) {
+                swap(array, i, i + 1);
+                i -= 2;
+            }
+            if (i < 0) {
+                i++;
+            }
+        }
+        return array;
+    }
+
+    // sortingShell: Реализация сортировки Шелла, по определению из интернет-источников
+
+    static int[] sortingShell(int[] array) {
+        for (int step = array.length / 2; step > 0; step /= 2) {
+            for (int i = step; i < array.length; i++) {
+                for (int j = i - step; j >= 0 && array[j] > array[j + step]; j -= step) {
+                    swap(array, j, j + step);
+                }
+            }
+        }
+        return array;
+    }
+
+    /*
+    task33: Пусть даны две неубывающие последовательности действительных чисел a1 <= a2 <= ... <= an и b1 <= b2 <=
+    <= ... <= bm. Требуется указать те места, на которые нужно вставлять элементы последовательности b1 <= b2 <= ... <=
+    <= bm в первую последовательность, так чтобы новая последовательность оставалась возрастающей.
+     */
+
+    static ArrayList<Integer> task33(double[] firstSequence, double[] secondSequence) {
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for (int i = 0; i < secondSequence.length; i++) {
+            int index = binarySearch(firstSequence, secondSequence[i], 0, firstSequence.length);
+            list.add(index);
+        }
+        return list;
     }
 }
