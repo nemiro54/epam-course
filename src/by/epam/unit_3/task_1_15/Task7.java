@@ -1,4 +1,4 @@
-package by.epam.unit_3;
+package by.epam.unit_3.task_1_15;
 
 /*
 task7: В строке вставить после каждого символа 'a' символ 'b'.

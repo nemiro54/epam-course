@@ -1,4 +1,4 @@
-package by.epam.unit_3;
+package by.epam.unit_3.task_1_15;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;

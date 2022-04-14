@@ -1,4 +1,4 @@
-package by.epam.unit_3;
+package by.epam.unit_3.task_1_15;
 
 /*
 task2: Замените в строке все вхождения 'word' на 'letter'.

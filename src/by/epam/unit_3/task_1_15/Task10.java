@@ -1,4 +1,4 @@
-package by.epam.unit_3;
+package by.epam.unit_3.task_1_15;
 
 /*
 task10: Подсчитать сколько раз среди заданной строки встречается буква 'a'.
