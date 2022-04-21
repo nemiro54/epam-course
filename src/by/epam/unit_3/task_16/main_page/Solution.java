@@ -1,4 +1,4 @@
-package by.epam.unit_3.task_16;
+package by.epam.unit_3.task_16.main_page;
 
 /*
 task16: Создать приложение, разбирающее текст (текст хранится в строке) и позволяющее выполнять с текстом три
@@ -8,7 +8,7 @@ task16: Создать приложение, разбирающее текст (
  */
 
 import by.epam.unit_3.task_16.exceptions.IncorrectInputFileException;
-import by.epam.unit_3.task_16.sort.Sort;
+import by.epam.unit_3.task_16.sorter.Sort;
 
 public class Solution {
     public static void main(String[] args) throws IncorrectInputFileException {
