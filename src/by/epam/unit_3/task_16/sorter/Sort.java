@@ -8,22 +8,27 @@ import static java.util.Arrays.*;
 
 public class Sort {
     public static List<String> sortParagraphs(String text) {
-        String[] paragraphs = text.split("\n"); // делим текст на абзацы
+        // делим текст на абзацы
+        String[] paragraphs = text.split("\n");
 
+        // в каждом абзаце сравниваем количество предложений
         return stream(paragraphs)
-                .sorted(Comparator.comparingInt(c -> c.split("[.!?]").length)) // в каждом абзаце сравниваем количество предложений
+                .sorted(Comparator.comparingInt(c -> c.split("[.!?]").length))
                 .toList();
     }
 
     public static List<String> sortSentences(String text) {
-        String[] sentences = Split.splitSentence(text); // делим текст на предложения
+        // делим текст на предложения
+        String[] sentences = Split.splitSentence(text);
 
         List<String> sortedSentences = new ArrayList<>();
 
         for (String sentence : sentences) {
-            String[] words = Split.splitWords(sentence); // делим предложение на отдельные слова
+            // делим предложение на отдельные слова
+            String[] words = Split.splitWords(sentence);
 
-            sort(words, Comparator.comparingInt(String::length)); // сортируем слова по длине
+            // сортируем слова по длине
+            sort(words, Comparator.comparingInt(String::length));
 
             sortedSentences.add(Arrays.toString(words));
         }
@@ -32,9 +37,13 @@ public class Sort {
     }
 
     public static List<String> sortLexemes(String text, char element) {
+        // делим текст на предложения
         String[] sentences = Split.splitSentence(text);
 
+        List<String> sortedWords = new ArrayList<>();
+
         for (String sentence : sentences) {
+            // делим предложения на отдельные слова
             String[] words = Split.splitWords(sentence);
 
             List<Word> wordList = new ArrayList<>();
@@ -43,11 +52,16 @@ public class Sort {
                 wordList.add(new Word(word, element));
             }
 
+            // сортируем по количеству вхождений или алфавиту (если кол-во равно)
             wordList.sort(Comparator.comparingInt(Word::getCount)
-                    .reversed());
+                    .reversed()
+                    .thenComparing(Word::getWordToLowerCase));
+
+            sentence = wordList.toString();
+            sortedWords.add(sentence);
         }
 
-        return null;
+        return sortedWords;
     }
 }
 

@@ -8,10 +8,13 @@ task16: Создать приложение, разбирающее текст (
  */
 
 import by.epam.unit_3.task_16.exceptions.IncorrectInputFileException;
+import by.epam.unit_3.task_16.reader.ReadStringFromFile;
 import by.epam.unit_3.task_16.sorter.Sort;
+
+import java.io.File;
 
 public class Solution {
     public static void main(String[] args) throws IncorrectInputFileException {
-
+        String text = ReadStringFromFile.read(new File("textForTask16"));
     }
 }

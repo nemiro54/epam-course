@@ -21,6 +21,10 @@ public class Word {
         return count;
     }
 
+    public String getWordToLowerCase() {
+        return word.toLowerCase();
+    }
+
     @Override
     public String toString() {
         return word;
