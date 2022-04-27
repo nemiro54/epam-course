@@ -8,17 +8,5 @@ task6: Составьте описание класса для представ�
 
 public class Solution {
     public static void main(String[] args) {
-        Time time = new Time(0, 0, 0);
-
-        System.out.println(time);
-
-        time.addMinute(50);
-        System.out.println(time);
-
-        time.addSecond(75);
-        System.out.println(time);
-
-        time.addHour(3);
-        System.out.println(time);
     }
 }
