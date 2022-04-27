@@ -25,4 +25,12 @@ public class AggregateCustomer {
                 .filter(x -> x.getCreditCard() <= end)
                 .forEach(System.out::println);
     }
+
+    public void setCustomers(Customer[] customers) {
+        this.customers = customers;
+    }
+
+    public Customer[] getCustomers() {
+        return customers;
+    }
 }
