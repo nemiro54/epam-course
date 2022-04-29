@@ -1,4 +1,4 @@
-package by.epam.unit_4.task10;
+package by.epam.unit_4.task_10;
 
 import java.time.LocalTime;
 

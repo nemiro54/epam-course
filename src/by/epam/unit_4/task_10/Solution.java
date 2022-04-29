@@ -1,4 +1,4 @@
-package by.epam.unit_4.task10;
+package by.epam.unit_4.task_10;
 
 /*
 task10: Создать класс Airline, спецификация которой приведена ниже. Определить конструкторы, set- и get- методы и
