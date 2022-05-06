@@ -6,16 +6,12 @@ task15: Туристические путевки. Сформировать на
 питания и числа дней. Реализовать выбор и сортировку путевок.
  */
 
-//      разобраться с выводом в строку, чтобы каждая путевка была с новой строки
-//      сейчас выводит просто в строку, в квадратных скобках
-//      + дописать поиск путевки по параметрам (по стране, дням, питанию и т.д.)
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
     public static void main(String[] args) {
-        TravelVoucher stambul = new TravelVoucher("Turkey", "Stambul", TypeVoucher.REST, Transport.AIRPLANE, Nutrition.ALL_INCLUSIVE, 10);
+        TravelVoucher stambul = new TravelVoucher("Turkey", "Stambul", TypeVoucher.SHOPPING, Transport.AIRPLANE, Nutrition.ALL_INCLUSIVE, 10);
         TravelVoucher kiev = new TravelVoucher("Ukraine", "Kiev", TypeVoucher.EXCURSION, Transport.TRAIN, Nutrition.WITHOUT_NUTRITION, 4);
         TravelVoucher losAngeles = new TravelVoucher("USA", "LA", TypeVoucher.REST, Transport.AIRPLANE, Nutrition.BREAKFAST, 11);
         TravelVoucher bukovel = new TravelVoucher("Ukraine", "Bukovel", TypeVoucher.TREATMENT, Transport.BUS, Nutrition.THREE_MEALS, 21);
@@ -29,6 +25,6 @@ public class Solution {
 
         VoucherOffers voucherOffers = new VoucherOffers(travelVouchers);
 
-        voucherOffers.sortByDays();
+        voucherOffers.searchByCountry("ukraine");
     }
 }

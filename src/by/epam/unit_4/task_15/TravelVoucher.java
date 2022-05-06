@@ -67,7 +67,7 @@ public class TravelVoucher {
 
     @Override
     public String toString() {
-        return String.format("%s, %s: %s. Транспорт: %s. Питание: %s. Количество дней: %d.\n",
+        return String.format("%s, %s: %s. Транспорт: %s. Питание: %s. Количество дней: %d.",
                 country, location, typeVoucher, transport, nutrition, numberOfDays);
     }
 }

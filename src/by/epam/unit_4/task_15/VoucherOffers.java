@@ -10,34 +10,40 @@ public class VoucherOffers {
         this.travelVouchers = travelVouchers;
     }
 
-    public void sortByCountry() {
-        travelVouchers.sort(Comparator.comparing(TravelVoucher::getCountry));
-        System.out.println(travelVouchers);
+    //    набор предложений по заданным параметрам
+    public void getOffer(Transport transport, Nutrition nutrition, int days) {
+        for (TravelVoucher travelVoucher : travelVouchers) {
+            if (travelVoucher.getTransport().equals(transport)
+                    && travelVoucher.getNutrition().equals(nutrition)
+                    && travelVoucher.getNumberOfDays() == days) {
+                System.out.println(travelVoucher);
+            }
+        }
     }
 
-    public void sortByLocation() {
+    private void sortByCountry() {
+        travelVouchers.sort(Comparator.comparing(TravelVoucher::getCountry)
+                .thenComparing(TravelVoucher::getLocation));
+    }
+
+    private void sortByLocation() {
         travelVouchers.sort(Comparator.comparing(TravelVoucher::getLocation));
-        System.out.println(travelVouchers);
     }
 
-    public void sortByTypeVoucher() {
+    private void sortByTypeVoucher() {
         travelVouchers.sort(Comparator.comparing(TravelVoucher::getTypeVoucher));
-        System.out.println(travelVouchers);
     }
 
-    public void sortByTransport() {
+    private void sortByTransport() {
         travelVouchers.sort(Comparator.comparing(TravelVoucher::getTransport));
-        System.out.println(travelVouchers);
     }
 
-    public void sortByNutrition() {
-        travelVouchers.sort(Comparator.comparingInt(x -> x.getNutrition().getFlag()));
-        System.out.println(travelVouchers);
+    private void sortByNutrition() {
+        travelVouchers.sort(Comparator.comparingInt(x -> x.getNutrition().ordinal()));
     }
 
-    public void sortByDays() {
+    private void sortByDays() {
         travelVouchers.sort(Comparator.comparingInt(TravelVoucher::getNumberOfDays));
-        System.out.println(travelVouchers);
     }
 
     public void searchByCountry(String country) {
@@ -45,6 +51,56 @@ public class VoucherOffers {
 
         for (TravelVoucher travelVoucher : travelVouchers) {
             if (travelVoucher.getCountry().equalsIgnoreCase(country)) {
+                System.out.println(travelVoucher);
+            }
+        }
+    }
+
+    public void searchByLocation(String location) {
+        sortByLocation();
+
+        for (TravelVoucher travelVoucher : travelVouchers) {
+            if (travelVoucher.getLocation().equalsIgnoreCase(location)) {
+                System.out.println(travelVoucher);
+            }
+        }
+    }
+
+    public void searchByTypeVoucher(TypeVoucher typeVoucher) {
+        sortByTypeVoucher();
+
+        for (TravelVoucher travelVoucher : travelVouchers) {
+            if (travelVoucher.getTypeVoucher().equals(typeVoucher)) {
+                System.out.println(travelVoucher);
+            }
+        }
+    }
+
+    public void searchByTransport(Transport transport) {
+        sortByTransport();
+
+        for (TravelVoucher travelVoucher : travelVouchers) {
+            if (travelVoucher.getTransport().equals(transport)) {
+                System.out.println(travelVoucher);
+            }
+        }
+    }
+
+    public void searchByNutrition(Nutrition nutrition) {
+        sortByNutrition();
+
+        for (TravelVoucher travelVoucher : travelVouchers) {
+            if (travelVoucher.getNutrition().equals(nutrition)) {
+                System.out.println(travelVoucher);
+            }
+        }
+    }
+
+    public void searchByDays(int days) {
+        sortByDays();
+
+        for (TravelVoucher travelVoucher : travelVouchers) {
+            if (travelVoucher.getNumberOfDays() == days) {
                 System.out.println(travelVoucher);
             }
         }
@@ -66,19 +122,6 @@ public class VoucherOffers {
             travelVouchers.forEach(x -> stringBuilder.append(x).append("\n"));
 
             return stringBuilder.toString();
-        } else return null;
+        } else return "";
     }
-
-//    @Override
-//    public String toString() {
-//        if (this.travelVouchers != null) {
-//            StringBuilder tpSet = new StringBuilder();
-//            for (TravelVoucher tp : travelVouchers) {
-//                tpSet.append(tp.toString()).append(";\n");
-//            }
-//            return tpSet.toString();
-//        } else {
-//            return "Список туристических путевок пуст.";
-//        }
-//    }
 }
