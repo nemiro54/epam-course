@@ -14,5 +14,6 @@ package by.epam.unit_5.task_5;
 
 public class Main {
     public static void main(String[] args) {
+        MainMenu.startProgram();
     }
 }
