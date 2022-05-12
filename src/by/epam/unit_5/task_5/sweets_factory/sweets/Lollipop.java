@@ -1,14 +1,14 @@
-package by.epam.unit_5.tsak_5.sweets_factory.sweets;
+package by.epam.unit_5.task_5.sweets_factory.sweets;
 
-public class Biscuit implements Sweets {
+public class Lollipop implements Sweets {
     private final String name;
     private final double price;
     private final int size;
 
-    public Biscuit() {
-        this.name = "Бисквит";
-        this.price = 4.60;
-        this.size = 5;
+    public Lollipop() {
+        this.name = "Леденец";
+        this.price = 2.10;
+        this.size = 2;
     }
 
     @Override

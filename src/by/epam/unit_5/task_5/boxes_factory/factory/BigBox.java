@@ -1,12 +1,12 @@
-package by.epam.unit_5.tsak_5.boxes_factory.factory;
+package by.epam.unit_5.task_5.boxes_factory.factory;
 
-public class MiddleBox implements Boxes {
+public class BigBox implements Boxes {
     private final double price;
     private final int capacity;
 
-    public MiddleBox() {
-        this.price = 2.15;
-        this.capacity = 10;
+    public BigBox() {
+        this.price = 3.80;
+        this.capacity = 15;
     }
 
     @Override

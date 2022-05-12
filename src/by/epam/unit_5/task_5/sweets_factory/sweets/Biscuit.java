@@ -1,16 +1,17 @@
-package by.epam.unit_5.tsak_5.sweets_factory.sweets;
+package by.epam.unit_5.task_5.sweets_factory.sweets;
 
-public class Cake implements Sweets {
+public class Biscuit implements Sweets {
     private final String name;
     private final double price;
     private final int size;
 
-    public Cake() {
-        this.name = "Кекс";
-        this.price = 2.90;
-        this.size = 3;
+    public Biscuit() {
+        this.name = "Бисквит";
+        this.price = 4.60;
+        this.size = 5;
     }
 
+    @Override
     public String getName() {
         return name;
     }

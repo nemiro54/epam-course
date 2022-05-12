@@ -1,4 +1,4 @@
-package by.epam.unit_5.tsak_5.sweets_factory.sweets;
+package by.epam.unit_5.task_5.sweets_factory.sweets;
 
 public class Candy implements Sweets {
     private final String name;

@@ -1,4 +1,4 @@
-package by.epam.unit_5.tsak_5;
+package by.epam.unit_5.task_5;
 
 /*
     Создать консольное приложение, удовлетворяющее следующим требованиям:
@@ -11,10 +11,6 @@ package by.epam.unit_5.tsak_5;
     Вариант B. Подарки. Реализовать приложение, позволяющее создавать подарки (объект, представляющий собой подарок).
     Составляющими целого подарка являются сладости и упаковка.
  */
-
-import by.epam.unit_5.tsak_5.sweets_factory.CreateSweetsByName;
-import by.epam.unit_5.tsak_5.sweets_factory.factory.SweetsFactory;
-import by.epam.unit_5.tsak_5.sweets_factory.sweets.Sweets;
 
 public class Main {
     public static void main(String[] args) {

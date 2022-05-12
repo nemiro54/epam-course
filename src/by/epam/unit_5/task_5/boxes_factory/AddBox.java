@@ -1,8 +1,8 @@
-package by.epam.unit_5.tsak_5.boxes_factory;
+package by.epam.unit_5.task_5.boxes_factory;
 
-import by.epam.unit_5.tsak_5.boxes_factory.boxes.BigBoxesFactory;
-import by.epam.unit_5.tsak_5.boxes_factory.boxes.BoxesFactory;
-import by.epam.unit_5.tsak_5.boxes_factory.boxes.SmallBoxesFactory;
+import by.epam.unit_5.task_5.boxes_factory.boxes.BigBoxesFactory;
+import by.epam.unit_5.task_5.boxes_factory.boxes.BoxesFactory;
+import by.epam.unit_5.task_5.boxes_factory.boxes.SmallBoxesFactory;
 
 public class AddBox {
     public static BoxesFactory addBox(String str) {
