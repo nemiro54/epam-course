@@ -2,8 +2,8 @@ package by.epam.unit_5.tsak_5.sweets_factory;
 
 import by.epam.unit_5.tsak_5.sweets_factory.factory.*;
 
-public class CreateSweetsByName {
-    public static SweetsFactory createSweetByName(String str) {
+public class AddSweet {
+    public static SweetsFactory addSweet(String str) {
         if (str.equalsIgnoreCase("cake")) {
             return new CakeFactory();
         } else if (str.equalsIgnoreCase("biscuit")) {

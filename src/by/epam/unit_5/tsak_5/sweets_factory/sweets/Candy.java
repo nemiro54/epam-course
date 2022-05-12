@@ -1,9 +1,15 @@
 package by.epam.unit_5.tsak_5.sweets_factory.sweets;
 
 public class Candy implements Sweets {
-    private String name = "Конфета";
-    private double price = 0.45;
-    private int size = 1;
+    private final String name;
+    private final double price;
+    private final int size;
+
+    public Candy() {
+        this.name = "Конфета";
+        this.price = 0.45;
+        this.size = 1;
+    }
 
     @Override
     public String getName() {

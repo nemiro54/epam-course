@@ -1,9 +1,15 @@
 package by.epam.unit_5.tsak_5.sweets_factory.sweets;
 
 public class Lollipop implements Sweets {
-    private String name = "Леденец";
-    private double price = 2.10;
-    private int size = 2;
+    private final String name;
+    private final double price;
+    private final int size;
+
+    public Lollipop() {
+        this.name = "Леденец";
+        this.price = 2.10;
+        this.size = 2;
+    }
 
     @Override
     public String getName() {
