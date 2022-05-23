@@ -23,12 +23,21 @@ unit_6.task_1: Создать консольное приложение "Уче�
 4. Mail API
  */
 
-import by.epam.unit_6.task_1.cryptographer.Password;
+import by.epam.unit_6.task_1.books_catalog.Author;
+import by.epam.unit_6.task_1.books_catalog.Book;
+import by.epam.unit_6.task_1.books_catalog.EBook;
+import by.epam.unit_6.task_1.books_catalog.Publisher;
 import by.epam.unit_6.task_1.users.Role;
 import by.epam.unit_6.task_1.users.User;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class Main {
-    public static void main(String[] args) {
-        String path = "src/by/epam/unit_6/task_1/users/users";
+    public static void main(String[] args) throws MalformedURLException {
+        Author authorTolstoy = new Author("Leo", "Tolstoy");
+        Publisher publisherNauka = new Publisher("Nauka");
+        URL url = new URL("https://google.com");
+        EBook warAndPeace = new EBook("Parents and children", authorTolstoy, publisherNauka, 2018, url);
     }
 }
