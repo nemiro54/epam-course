@@ -26,8 +26,6 @@ unit_6.task_1: Создать консольное приложение "Уче�
 import by.epam.unit_6.task_1.books_catalog.author.Author;
 import by.epam.unit_6.task_1.books_catalog.books.Book;
 import by.epam.unit_6.task_1.books_catalog.publisher.Publisher;
-import by.epam.unit_6.task_1.users.Role;
-import by.epam.unit_6.task_1.users.User;
 
 import java.net.MalformedURLException;
 import java.net.URL;
