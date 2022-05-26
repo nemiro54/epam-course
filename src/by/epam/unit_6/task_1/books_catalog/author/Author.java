@@ -1,4 +1,4 @@
-package by.epam.unit_6.task_1.books_catalog;
+package by.epam.unit_6.task_1.books_catalog.author;
 
 public class Author {
     private String firstName;

@@ -17,16 +17,15 @@ unit_6.task_1: Создать консольное приложение "Уче�
  */
 
 /*
-1. сделать каталог книг
+1. сделать каталог книг - done
 2. методы каталога
 3. методы пользователей
 4. Mail API
  */
 
-import by.epam.unit_6.task_1.books_catalog.Author;
-import by.epam.unit_6.task_1.books_catalog.Book;
-import by.epam.unit_6.task_1.books_catalog.EBook;
-import by.epam.unit_6.task_1.books_catalog.Publisher;
+import by.epam.unit_6.task_1.books_catalog.author.Author;
+import by.epam.unit_6.task_1.books_catalog.books.Book;
+import by.epam.unit_6.task_1.books_catalog.publisher.Publisher;
 import by.epam.unit_6.task_1.users.Role;
 import by.epam.unit_6.task_1.users.User;
 
@@ -35,9 +34,23 @@ import java.net.URL;
 
 public class Main {
     public static void main(String[] args) throws MalformedURLException {
-        Author authorTolstoy = new Author("Leo", "Tolstoy");
+        Author tolstoy = new Author("Leo", "Tolstoy");
+        Author pushkin = new Author("Alexsandr", "Pushkin");
+        Author dostoevskiy = new Author("Fedor", "Dostoevskiy");
+        Author lermontov = new Author("Mihail", "Lermonov");
+        Author kolas = new Author("Yakub", "Kolas");
+
         Publisher publisherNauka = new Publisher("Nauka");
+
         URL url = new URL("https://google.com");
-        EBook warAndPeace = new EBook("Parents and children", authorTolstoy, publisherNauka, 2018, url);
+
+        Book warAndPeace = new Book("War and Peace", tolstoy, publisherNauka, 1867);
+        Book evgeniyOnegin = new Book("Evgeniy Onegin", pushkin, publisherNauka, 1823, url);
+        Book nakazanie = new Book("Преступление и наказание", dostoevskiy, publisherNauka, 1820);
+        Book mziri = new Book("Мцири", lermontov, publisherNauka, 1863, url);
+        Book kalasiPadSyarpom = new Book("Каласы пад сярпом тваим", kolas, publisherNauka, 1925);
+
+//        User admin = new User("admin", "admin@gmail.com", "qweRTY123", Role.ADMIN);
+//        admin.viewBookCatalog();
     }
 }

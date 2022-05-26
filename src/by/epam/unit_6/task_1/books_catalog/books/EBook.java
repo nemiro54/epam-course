@@ -1,11 +1,14 @@
-package by.epam.unit_6.task_1.books_catalog;
+package by.epam.unit_6.task_1.books_catalog.books;
+
+import by.epam.unit_6.task_1.books_catalog.publisher.Publisher;
+import by.epam.unit_6.task_1.books_catalog.author.Author;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 
-public class Book {
+public class EBook {
     private String title;
     private Author author;
     private Publisher publisher;
@@ -13,39 +16,21 @@ public class Book {
     private URL url;
     private final String booksFilePath = "src/by/epam/unit_6/task_1/books_catalog/booksCatalog";
 
-    public Book(String title, Author author, Publisher publisher, int publishingYear) {
-        this.title = title;
-        this.author = author;
-        this.publisher = publisher;
-        this.publishingYear = publishingYear;
-        writeBook();
-    }
-
-    public Book(String title, Author author, Publisher publisher, int publishingYear, URL url) {
+    public EBook(String title, Author author, Publisher publisher, int publishingYear, URL url) {
         this.title = title;
         this.author = author;
         this.publisher = publisher;
         this.publishingYear = publishingYear;
         this.url = url;
-        writeEBook();
+        writeBook();
     }
 
-    //    write book to txt file
+    //    write e-book to txt file
 
-    protected void writeBook() {
-        String stringBook = String.format("&title=%s&author=%s&publisher=%s&year=%d&",
-                getTitle(), getAuthor(), getPublisher(), getPublishingYear());
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(booksFilePath, true))) {
-            writer.write(stringBook + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void writeEBook() {
+    public void writeBook() {
         String stringBook = String.format("&title=%s&author=%s&publisher=%s&year=%d&url=%s&",
-                getTitle(), getAuthor(), getPublisher(), getPublishingYear(), getUrl());
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(getBooksFilePath(), true))) {
+                title, author, publisher, publishingYear, url);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(booksFilePath, true))) {
             writer.write(stringBook + "\n");
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,7 +83,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return String.format("Book - '%s', author - %s, publishing year - %d.",
-                getTitle(), getAuthor(), getPublishingYear());
+        return String.format("Book - '%s', author - %s, publishing year - %d, website - %s",
+                title, author, publishingYear, url);
     }
 }

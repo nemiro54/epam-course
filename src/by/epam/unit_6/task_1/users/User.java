@@ -1,8 +1,11 @@
 package by.epam.unit_6.task_1.users;
 
+import by.epam.unit_6.task_1.books_catalog.books.Book;
 import by.epam.unit_6.task_1.cryptographer.Password;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,6 +23,30 @@ public class User {
         setPassword(password);
         this.role = role;
         writeUser();
+    }
+
+//    show book catalog to user
+
+    //    доделать переключение страниц (пока хз как это сделать)
+    public void viewBookCatalog() {
+        List<String> listBooks = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(Book.getBooksFilePath()))) {
+            while (reader.ready()) {
+                PrintWriter printWriter = new PrintWriter(System.out, true);
+                for (int i = 0; i < 4; i++) {
+                    if (reader.ready()) {
+                        printWriter.write(reader.readLine() + "\n");
+                    } else {
+                        printWriter.println("----------");
+                        return;
+                    }
+                }
+                printWriter.println("----------");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //    write user to txt file
