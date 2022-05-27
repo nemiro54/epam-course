@@ -1,7 +1,10 @@
 package by.epam.unit_6.task_1.users;
 
+import by.epam.unit_6.task_1.books_catalog.author.Author;
 import by.epam.unit_6.task_1.books_catalog.books.Book;
 import by.epam.unit_6.task_1.books_catalog.books.EBook;
+import by.epam.unit_6.task_1.books_catalog.publisher.Publisher;
+import by.epam.unit_6.task_1.mail_sender.EMailSender;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -9,26 +12,39 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class UserUtil {
-
-    static void addBookToCatalog(User user, Book book, String pathCatalog) {
+    static void addBook(User user, Book book, String pathCatalog) {
         if (user.getRole() == Role.ADMIN) {
-            writeBookToCatalog(book, pathCatalog);
+            writeBook(book, pathCatalog);
+
+            String subjectMail = "New book added to catalog";
+            String textMail = "We have added a new book to our catalog";
+
+            EMailSender eMailSender = new EMailSender(getUsersEMails(), user.getEMail());
+            eMailSender.sendEMails(subjectMail, textMail);
         } else {
             System.out.println("You cannot modify a directory!");
         }
     }
 
-    static void addEBookToCatalog(User user, EBook eBook, String pathCatalog) {
+    static void addEBook(User user, EBook eBook, String pathCatalog) {
         if (user.getRole() == Role.ADMIN) {
-            writeEBookToCatalog(eBook, pathCatalog);
+            writeEBook(eBook, pathCatalog);
+
+            String subjectMail = "New book added to catalog";
+            String textMail = "We have added a new book to our catalog";
+
+            EMailSender eMailSender = new EMailSender(getUsersEMails(), user.getEMail());
+            eMailSender.sendEMails(subjectMail, textMail);
         } else {
             System.out.println("You cannot modify a directory!");
         }
     }
 
-    static void deleteBookFromCatalog(User user, Book book, String pathCatalog) {
+    static void deleteBook(User user, Book book, String pathCatalog) {
         if (user.getRole() == Role.ADMIN) {
             String tmpSourceFile = "src/tmpFile";
 
@@ -58,52 +74,80 @@ public abstract class UserUtil {
         }
     }
 
+    static void suggestBook(User user, Book book) {
+        if (user.getRole() == Role.USER) {
+            String subjectMail = "New book";
+            String textMail = "Please add this book to the catalog.\n" + book;
+
+            EMailSender eMailSender = new EMailSender(getAdminEMails(), user.getEMail());
+            eMailSender.sendEMails(subjectMail, textMail);
+        }
+    }
+
     static void viewBookCatalog(String pathCatalog) {
-        List<String> books = readBooksFromCatalog(pathCatalog);
+        List<String> books = readBooks(pathCatalog);
         browseCatalog(books);
     }
 
-    static void searchByTitle(String title, String pathCatalog) {
-        List<String> allBooks = readBooksFromCatalog(pathCatalog);
-        List<String> booksByTitle = allBooks.stream().filter(x -> x.toLowerCase().contains(title.toLowerCase())).toList();
+    static void searchBook(String title, String pathCatalog) {
+        List<String> allBooks = readBooks(pathCatalog);
+        List<String> booksByTitle = allBooks.stream()
+                .filter(x -> x.toLowerCase().contains(title.toLowerCase()))
+                .toList();
         browseCatalog(booksByTitle);
     }
 
-    static void searchByAuthor(String author, String pathCatalog) {
-        List<String> allBooks = readBooksFromCatalog(pathCatalog);
-        List<String> booksByAuthor = allBooks.stream().filter(x -> x.toLowerCase().contains(author.toLowerCase())).toList();
+    static void searchBook(Author author, String pathCatalog) {
+        List<String> allBooks = readBooks(pathCatalog);
+        List<String> booksByAuthor = allBooks.stream()
+                .filter(x -> x.contains(author.getFirstName() + " " + author.getLastName()))
+                .toList();
         browseCatalog(booksByAuthor);
     }
 
-    static void searchByPublisher(String publisher, String pathCatalog) {
-        List<String> allBooks = readBooksFromCatalog(pathCatalog);
-        List<String> booksByAuthor = allBooks.stream().filter(x -> x.toLowerCase().contains(publisher.toLowerCase())).toList();
+    static void searchBook(Publisher publisher, String pathCatalog) {
+        List<String> allBooks = readBooks(pathCatalog);
+        List<String> booksByAuthor = allBooks.stream()
+                .filter(x -> x.contains(publisher.getName()))
+                .toList();
         browseCatalog(booksByAuthor);
     }
 
-    static void searchByYear(Integer year, String pathCatalog) {
-        List<String> allBooks = readBooksFromCatalog(pathCatalog);
-        List<String> booksByAuthor = allBooks.stream().filter(x -> x.contains(year.toString())).toList();
+    static void searchBook(Integer year, String pathCatalog) {
+        List<String> allBooks = readBooks(pathCatalog);
+        List<String> booksByAuthor = allBooks.stream()
+                .filter(x -> x.contains(year.toString()))
+                .toList();
         browseCatalog(booksByAuthor);
     }
 
-    private static void writeBookToCatalog(Book book, String pathCatalog) {
+    static void writeUser(User user) {
+        String stringUser = String.format("&nickName=%s&eMail=%s&password=%s&role=%s&",
+                user.getNickName(), user.getEMail(), user.getPassword(), user.getRole());
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(User.getUsersFilePath(), true))) {
+            writer.write(stringUser + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void writeBook(Book book, String pathCatalog) {
         String stringBook = String.format("%s, %s, %s, %d",
                 book.getTitle(), book.getAuthor(), book.getPublisher(), book.getPublishingYear());
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathCatalog, true))) {
-            writer.write(stringBook + "\n");
+            writer.write(stringBook + "\r\n");
             System.out.println("Book added successfully!");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void writeEBookToCatalog(EBook eBook, String pathCatalog) {
+    private static void writeEBook(EBook eBook, String pathCatalog) {
         String stringBook = String.format("%s, %s, %s, %d, %s",
                 eBook.getTitle(), eBook.getAuthor(), eBook.getPublisher(), eBook.getPublishingYear(), eBook.getUrl());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathCatalog, true))) {
-            writer.write(stringBook + "\n");
+            writer.write(stringBook + "\r\n");
             System.out.println("Book added successfully!");
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,7 +179,20 @@ public abstract class UserUtil {
         }
     }
 
-    private static List<String> readBooksFromCatalog(String pathCatalog) {
+    private static List<String> readUsers(String userFilePath) {
+        List<String> users = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(userFilePath))) {
+            while (reader.ready()) {
+                users.add(reader.readLine());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    private static List<String> readBooks(String pathCatalog) {
         List<String> books = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(pathCatalog))) {
@@ -146,5 +203,49 @@ public abstract class UserUtil {
             e.printStackTrace();
         }
         return books;
+    }
+
+    private static List<String> getUsersEMails() {
+        List<String> eMails = new ArrayList<>();
+        Pattern pattern = Pattern.compile("(([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6})");
+        Matcher matcher;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(User.getUsersFilePath()))) {
+            String line;
+            while (reader.ready()) {
+                line = reader.readLine();
+                matcher = pattern.matcher(line);
+                if (line.contains("role=USER")) {
+                    while (matcher.find()) {
+                        eMails.add(matcher.group());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return eMails;
+    }
+
+    private static List<String> getAdminEMails() {
+        List<String> eMails = new ArrayList<>();
+        Pattern pattern = Pattern.compile("(([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6})");
+        Matcher matcher;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(User.getUsersFilePath()))) {
+            String line;
+            while (reader.ready()) {
+                line = reader.readLine();
+                matcher = pattern.matcher(line);
+                if (line.contains("role=ADMIN")) {
+                    while (matcher.find()) {
+                        eMails.add(matcher.group());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return eMails;
     }
 }

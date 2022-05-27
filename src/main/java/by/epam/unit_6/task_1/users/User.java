@@ -1,6 +1,9 @@
 package by.epam.unit_6.task_1.users;
 
+import by.epam.unit_6.task_1.books_catalog.author.Author;
 import by.epam.unit_6.task_1.books_catalog.books.Book;
+import by.epam.unit_6.task_1.books_catalog.books.EBook;
+import by.epam.unit_6.task_1.books_catalog.publisher.Publisher;
 import by.epam.unit_6.task_1.cryptographer.Password;
 
 import java.io.*;
@@ -13,8 +16,8 @@ public class User {
     private String eMail;
     private String password;
     private Role role;
-    private final String usersFilePath = "src/main/java/by/epam/unit_6/task_1/users/users";
-    private final String booksPathCatalog = Book.getBooksFilePath();
+    private final static String usersFilePath = "src/main/java/by/epam/unit_6/task_1/users/users";
+    private final static String booksPathCatalog = Book.getBooksFilePath();
 
     public User(String nickName, String eMail, String password, Role role) {
         setNickName(nickName);
@@ -23,29 +26,45 @@ public class User {
         this.role = role;
     }
 
-    public void deleteBookFromCatalog(Book book) {
-        UserUtil.deleteBookFromCatalog(this, book, booksPathCatalog);
+    public void addUser() {
+        UserUtil.writeUser(this);
+    }
+
+    public void addBook(Book book) {
+        UserUtil.addBook(this, book, booksPathCatalog);
+    }
+
+    public void addBook(EBook eBook) {
+        UserUtil.addBook(this, eBook, booksPathCatalog);
+    }
+
+    public void deleteBook(Book book) {
+        UserUtil.deleteBook(this, book, booksPathCatalog);
+    }
+
+    public void suggestBook(Book book) {
+        UserUtil.suggestBook(this, book);
     }
 
     public void viewCatalog() {
         UserUtil.viewBookCatalog(booksPathCatalog);
     }
 
-    public void searchByYear(Integer year) {
-        UserUtil.searchByYear(year, booksPathCatalog);
+    public void searchBook(String title) {
+        UserUtil.searchBook(title, booksPathCatalog);
     }
 
-    public void writeUserToFile() {
-        String stringUser = String.format("&nickName=%s&eMail=%s&password=%s&role=%s&",
-                getNickName(), getEMail(), getPassword(), getRole());
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFilePath, true))) {
-            writer.write(stringUser + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void searchBook(Author author) {
+        UserUtil.searchBook(author, booksPathCatalog);
     }
 
-    //    check nickname for uniqueness
+    public void searchBook(Publisher publisher) {
+        UserUtil.searchBook(publisher, booksPathCatalog);
+    }
+
+    public void searchBook(Integer year) {
+        UserUtil.searchBook(year, booksPathCatalog);
+    }
 
     private boolean checkNickName(String nickName) {
         Pattern pattern = Pattern.compile("^[a-z0-9_-]{3,16}$");
@@ -53,23 +72,17 @@ public class User {
         return matcher.matches();
     }
 
-    //    check e-mail for uniqueness
-
     private boolean checkEMail(String eMail) {
         Pattern pattern = Pattern.compile("^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$");
         Matcher matcher = pattern.matcher(eMail);
         return matcher.matches();
     }
 
-    //    check password for validity
-
     private boolean checkPassword(String password) {
         Pattern pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,16}$");
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
-
-    //    check nickname for use in
 
     private boolean isNickNameUsed(String nickName) {
         Pattern pattern = Pattern.compile("&nickName=" + nickName + "&");
@@ -86,8 +99,6 @@ public class User {
         }
         return false;
     }
-
-    //    check e-mail for use in
 
     private boolean isEMailUsed(String eMail) {
         Pattern pattern = Pattern.compile("&eMail=" + eMail + "&");
@@ -179,6 +190,10 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public static String getUsersFilePath() {
+        return usersFilePath;
     }
 
     @Override

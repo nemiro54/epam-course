@@ -13,10 +13,6 @@ public class Password {
     private final static int saltLength = 32;
     private final static int desiredLength = 256;
 
-
-//    Computes a salted PBKDF2 hash of given plaintext password suitable for storing in a database.
-//    Empty password are not supported.
-
     public static String getSaltedHash(String password) {
         try {
             byte[] salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(saltLength);
@@ -26,9 +22,6 @@ public class Password {
             return null;
         }
     }
-
-
-//    Checks whether given plaintext password corresponds to a stored salted hash of the password.
 
     public static boolean checkPassword(String password, String stored) {
         String[] saltAndPass = stored.split("\\$");
