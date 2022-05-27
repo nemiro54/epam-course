@@ -16,19 +16,21 @@ unit_6.task_1: Создать консольное приложение "Уче�
 - Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде.
  */
 
-/*
-1. сделать каталог книг - done
-2. методы каталога
-3. методы пользователей
-4. Mail API
- */
-
 import by.epam.unit_6.task_1.books_catalog.author.Author;
 import by.epam.unit_6.task_1.books_catalog.books.Book;
+import by.epam.unit_6.task_1.books_catalog.books.EBook;
 import by.epam.unit_6.task_1.books_catalog.publisher.Publisher;
+import by.epam.unit_6.task_1.users.Role;
+import by.epam.unit_6.task_1.users.User;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
+/*
+1. add util methods to user.class
+2. add mail api
+3. improved method names
+ */
 
 public class Main {
     public static void main(String[] args) throws MalformedURLException {
@@ -43,12 +45,12 @@ public class Main {
         URL url = new URL("https://google.com");
 
         Book warAndPeace = new Book("War and Peace", tolstoy, publisherNauka, 1867);
-        Book evgeniyOnegin = new Book("Evgeniy Onegin", pushkin, publisherNauka, 1823, url);
+        EBook evgeniyOnegin = new EBook("Evgeniy Onegin", pushkin, publisherNauka, 1823, url);
         Book nakazanie = new Book("Преступление и наказание", dostoevskiy, publisherNauka, 1820);
-        Book mziri = new Book("Мцири", lermontov, publisherNauka, 1863, url);
+        EBook mziri = new EBook("Мцири", lermontov, publisherNauka, 1863, url);
         Book kalasiPadSyarpom = new Book("Каласы пад сярпом тваим", kolas, publisherNauka, 1925);
 
-//        User admin = new User("admin", "admin@gmail.com", "qweRTY123", Role.ADMIN);
-//        admin.viewBookCatalog();
+        User admin = new User("admin", "admin@gmail.com", "qweRTY123", Role.ADMIN);
+        User user = new User("user", "user@gmail.com", "qweRYT221", Role.USER);
     }
 }

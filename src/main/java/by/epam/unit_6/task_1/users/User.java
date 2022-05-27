@@ -4,8 +4,6 @@ import by.epam.unit_6.task_1.books_catalog.books.Book;
 import by.epam.unit_6.task_1.cryptographer.Password;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,43 +13,29 @@ public class User {
     private String eMail;
     private String password;
     private Role role;
-    private final String usersFilePath = "src/by/epam/unit_6/task_1/users/users";
+    private final String usersFilePath = "src/main/java/by/epam/unit_6/task_1/users/users";
+    private final String booksPathCatalog = Book.getBooksFilePath();
 
     public User(String nickName, String eMail, String password, Role role) {
         setNickName(nickName);
         setEMail(eMail);
         setPassword(password);
         this.role = role;
-        writeUser();
     }
 
-//    show book catalog to user
-
-    //    доделать переключение страниц (пока хз как это сделать)
-    public void viewBookCatalog() {
-        List<String> listBooks = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(Book.getBooksFilePath()))) {
-            while (reader.ready()) {
-                PrintWriter printWriter = new PrintWriter(System.out, true);
-                for (int i = 0; i < 4; i++) {
-                    if (reader.ready()) {
-                        printWriter.write(reader.readLine() + "\n");
-                    } else {
-                        printWriter.println("----------");
-                        return;
-                    }
-                }
-                printWriter.println("----------");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void deleteBookFromCatalog(Book book) {
+        UserUtil.deleteBookFromCatalog(this, book, booksPathCatalog);
     }
 
-    //    write user to txt file
+    public void viewCatalog() {
+        UserUtil.viewBookCatalog(booksPathCatalog);
+    }
 
-    private void writeUser() {
+    public void searchByYear(Integer year) {
+        UserUtil.searchByYear(year, booksPathCatalog);
+    }
+
+    public void writeUserToFile() {
         String stringUser = String.format("&nickName=%s&eMail=%s&password=%s&role=%s&",
                 getNickName(), getEMail(), getPassword(), getRole());
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(usersFilePath, true))) {
@@ -90,11 +74,9 @@ public class User {
     private boolean isNickNameUsed(String nickName) {
         Pattern pattern = Pattern.compile("&nickName=" + nickName + "&");
         Matcher matcher;
-
         try (BufferedReader reader = new BufferedReader(new FileReader(usersFilePath))) {
             while (reader.ready()) {
                 matcher = pattern.matcher(reader.readLine());
-
                 if (matcher.find()) {
                     return true;
                 }
@@ -110,7 +92,6 @@ public class User {
     private boolean isEMailUsed(String eMail) {
         Pattern pattern = Pattern.compile("&eMail=" + eMail + "&");
         Matcher matcher;
-
         try (BufferedReader reader = new BufferedReader(new FileReader(usersFilePath))) {
             while (reader.ready()) {
                 matcher = pattern.matcher(reader.readLine());

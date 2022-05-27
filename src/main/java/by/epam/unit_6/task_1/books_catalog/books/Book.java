@@ -3,49 +3,18 @@ package by.epam.unit_6.task_1.books_catalog.books;
 import by.epam.unit_6.task_1.books_catalog.publisher.Publisher;
 import by.epam.unit_6.task_1.books_catalog.author.Author;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.net.URL;
-
 public class Book {
     private String title;
     private Author author;
     private Publisher publisher;
     private int publishingYear;
-    private URL url;
-    private final static String booksFilePath = "src/by/epam/unit_6/task_1/books_catalog/booksCatalog";
+    private final static String booksFilePath = "src/main/java/by/epam/unit_6/task_1/books_catalog/booksCatalog";
 
     public Book(String title, Author author, Publisher publisher, int publishingYear) {
         this.title = title;
         this.author = author;
         this.publisher = publisher;
         this.publishingYear = publishingYear;
-        writeBook();
-    }
-
-    public Book(String title, Author author, Publisher publisher, int publishingYear, URL url) {
-        this.title = title;
-        this.author = author;
-        this.publisher = publisher;
-        this.publishingYear = publishingYear;
-        this.url = url;
-        writeBook();
-    }
-
-    //    write book to txt file
-
-    public void writeBook() {
-        String stringBook = String.format("&title=%s&author=%s&publisher=%s&year=%d&",
-                title, author, publisher, publishingYear);
-        String stringEBook = String.format("&title=%s&author=%s&publisher=%s&year=%d&url=%s&",
-                title, author, publisher, publishingYear, url);
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(booksFilePath, true))) {
-            writer.write(url == null ? stringBook + "\n" : stringEBook + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public String getTitle() {
@@ -80,25 +49,17 @@ public class Book {
         this.publishingYear = publishingYear;
     }
 
-    public URL getUrl() {
-        return url;
-    }
-
-    public void setUrl(URL url) {
-        this.url = url;
-    }
-
     public static String getBooksFilePath() {
         return booksFilePath;
     }
 
     @Override
     public String toString() {
-        String book = String.format("Book - '%s', author - %s, publishing year - %d.",
-                title, author, publishingYear);
-        String eBook = String.format("Book - '%s', author - %s, publishing year - %d, website - %s",
-                title, author, publishingYear, url);
-
-        return url == null ? book : eBook;
+        return "Book{" +
+                "title='" + title + '\'' +
+                ", author=" + author +
+                ", publisher=" + publisher +
+                ", publishingYear=" + publishingYear +
+                '}';
     }
 }
