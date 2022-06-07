@@ -9,31 +9,31 @@ import java.time.LocalDate;
 public class Note implements Serializable {
     @Serial
     private static final long serialVersionUID = -1618472200206113548L;
-    private Topic topic;
+    private String topic;
     private LocalDate localDate;
     private EMail eMail;
-    private Message message;
+    private String message;
 
-    public Note(Topic topic, EMail eMail, Message message) {
+    public Note(String topic, EMail eMail, String message) {
         this.topic = topic;
         this.eMail = eMail;
         this.message = message;
         this.localDate = LocalDate.now();
     }
 
-    public Topic getTopic() {
+    public String getTopic() {
         return topic;
     }
 
-    public void setTopic(Topic topic) {
+    public void setTopic(String topic) {
         this.topic = topic;
     }
 
-    public LocalDate getDate() {
+    public LocalDate getLocalDate() {
         return localDate;
     }
 
-    public void setDate(LocalDate localDate) {
+    public void setLocalDate(LocalDate localDate) {
         this.localDate = localDate;
     }
 
@@ -45,11 +45,11 @@ public class Note implements Serializable {
         this.eMail = eMail;
     }
 
-    public Message getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(Message message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 

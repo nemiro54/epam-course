@@ -1,11 +1,15 @@
 package by.epam.unit_6.task_2.email;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EMail implements Serializable {
+    @Serial
+    private static final long serialVersionUID = -532778086907537107L;
     private String eMail;
     private final Pattern EMAIL_PATTERN = Pattern.compile("^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$");
 
@@ -31,6 +35,19 @@ public class EMail implements Serializable {
 
             setEMail(scanner.nextLine());
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EMail)) return false;
+        EMail eMail1 = (EMail) o;
+        return eMail.equals(eMail1.eMail);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eMail);
     }
 
     @Override
