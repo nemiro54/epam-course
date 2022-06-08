@@ -5,7 +5,10 @@ import by.epam.unit_6.task_2.email.EMail;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class NotePad implements Serializable {
     @Serial
@@ -30,8 +33,7 @@ public class NotePad implements Serializable {
 
     public static void saveFile(NotePad notePad, String path) {
         if (file.canWrite()) {
-            try (FileOutputStream outputStream = new FileOutputStream(path);
-                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
+            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(path))) {
                 objectOutputStream.writeObject(notePad);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -45,49 +47,99 @@ public class NotePad implements Serializable {
         notes.add(note);
     }
 
-    public void addNote(List<Note> notes) {
-        this.notes.addAll(notes);
-    }
-
     public void searchNote(String word) {
-        if (!word.equals("")) {
-            notes.stream()
-                    .filter(x -> x.getTopic().toLowerCase().contains(word)
-                            || x.getMessage().toLowerCase().contains(word))
-                    .forEach(System.out::println);
+        Pattern pattern = Pattern.compile(word.toLowerCase());
+        Matcher matcherTopic;
+        Matcher matcherMessage;
+
+        for (Note note : notes) {
+            matcherTopic = pattern.matcher(note.getTopic().toLowerCase());
+            matcherMessage = pattern.matcher(note.getMessage().toLowerCase());
+
+            if (matcherTopic.matches() || matcherMessage.matches()) {
+                System.out.println(note);
+            }
         }
     }
 
     public void searchNote(LocalDate localDate) {
-        notes.stream()
-                .filter(x -> x.getLocalDate().equals(localDate))
-                .forEach(System.out::println);
+        Pattern pattern = Pattern.compile(localDate.toString());
+        Matcher matcher;
+
+        for (Note note : notes) {
+            matcher = pattern.matcher(note.getLocalDate().toString());
+
+            if (matcher.matches()) {
+                System.out.println(note);
+            }
+        }
     }
 
     public void searchNote(EMail eMail) {
-        notes.stream()
-                .filter(x -> x.getEMail().equals(eMail))
-                .forEach(System.out::println);
+        Pattern pattern = Pattern.compile(eMail.toString());
+        Matcher matcher;
+
+        for (Note note : notes) {
+            matcher = pattern.matcher(note.getEMail().toString());
+
+            if (matcher.matches()) {
+                System.out.println(note);
+            }
+        }
     }
 
     public void searchNote(String word, LocalDate localDate) {
-        if (!word.equals("")) {
-            notes.stream()
-                    .filter(x -> x.getLocalDate().equals(localDate))
-                    .filter(x -> x.getTopic().toLowerCase().contains(word)
-                            || x.getMessage().toLowerCase().contains(word))
-                    .forEach(System.out::println);
+        Pattern patternWord = Pattern.compile(word.toLowerCase());
+        Pattern patternLocalDate = Pattern.compile(localDate.toString());
+        Matcher matcherTopic;
+        Matcher matcherMessage;
+        Matcher matcherLocalDate;
+
+        for (Note note : notes) {
+            matcherTopic = patternWord.matcher(note.getTopic().toLowerCase());
+            matcherMessage = patternWord.matcher(note.getMessage().toLowerCase());
+            matcherLocalDate = patternLocalDate.matcher(note.getLocalDate().toString());
+
+            if ((matcherTopic.matches() || matcherMessage.matches()) && matcherLocalDate.matches()) {
+                System.out.println(note);
+            }
         }
     }
 
     public void searchNote(String word, EMail eMail) {
-        if (!word.equals("")) {
-            notes.stream()
-                    .filter(x -> x.getEMail().equals(eMail))
-                    .filter(x -> x.getTopic().toLowerCase().contains(word)
-                            || x.getMessage().toLowerCase().contains(word))
-                    .forEach(System.out::println);
+        Pattern patternWord = Pattern.compile(word.toLowerCase());
+        Pattern patternEmail = Pattern.compile(eMail.toString().toLowerCase());
+        Matcher matcherTopic;
+        Matcher matcherMessage;
+        Matcher matcherEmail;
+
+        for (Note note : notes) {
+            matcherTopic = patternWord.matcher(note.getTopic().toLowerCase());
+            matcherMessage = patternWord.matcher(note.getMessage().toLowerCase());
+            matcherEmail = patternEmail.matcher(note.getEMail().toString().toLowerCase());
+
+            if ((matcherTopic.matches() || matcherMessage.matches()) && matcherEmail.matches()) {
+                System.out.println(note);
+            }
         }
+    }
+
+    public void sortNotesByTopic() {
+        notes.stream()
+                .sorted(Comparator.comparing(Note::getTopic))
+                .forEach(System.out::println);
+    }
+
+    public void sortNotesByDate() {
+        notes.stream()
+                .sorted(Comparator.comparing(Note::getLocalDate))
+                .forEach(System.out::println);
+    }
+
+    public void sortNotesByEmail() {
+        notes.stream()
+                .sorted(Comparator.comparing(x -> x.getEMail().toString()))
+                .forEach(System.out::println);
     }
 
     public void printNotes() {

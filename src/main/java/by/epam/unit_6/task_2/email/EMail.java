@@ -11,7 +11,7 @@ public class EMail implements Serializable {
     @Serial
     private static final long serialVersionUID = -532778086907537107L;
     private String eMail;
-    private final Pattern EMAIL_PATTERN = Pattern.compile("^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$");
+    private final Pattern EMAIL_PATTERN = Pattern.compile("^([a-zA-Z0-9_-]+\\.)*[a-zA-Z0-9_-]+@[a-z0-9_-]+(\\.[a-zA-Z0-9_-]+)*\\.[a-zA-Z]{2,6}$");
 
     public EMail(String eMail) {
         setEMail(eMail);
