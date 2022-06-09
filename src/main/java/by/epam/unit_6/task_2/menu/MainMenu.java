@@ -28,21 +28,11 @@ public abstract class MainMenu {
             int choose = choicePosition(1, 5);
 
             switch (choose) {
-                case 1:
-                    addNote();
-                    break;
-                case 2:
-                    searchNote();
-                    break;
-                case 3:
-                    sortNotes();
-                    break;
-                case 4:
-                    printNotes();
-                    break;
-                case 5:
-                    exit = true;
-                    break;
+                case 1 -> addNote();
+                case 2 -> searchNote();
+                case 3 -> sortNotes();
+                case 4 -> printNotes();
+                case 5 -> exit = true;
             }
         }
 
@@ -122,26 +112,31 @@ public abstract class MainMenu {
         int choose = choicePosition(1, 6);
 
         switch (choose) {
-            case 1:
-                notePad.searchNote(getWord());
-                break;
-            case 2:
-                notePad.searchNote(getLocalDate());
-                break;
-            case 3:
-                notePad.searchNote(getEMail());
-                break;
-            case 4:
-                notePad.searchNote(getWord(), getLocalDate());
-                break;
-            case 5:
-                notePad.searchNote(getWord(), getEMail());
-            case 6:
-                break;
+            case 1 -> notePad.searchNote(getWord());
+            case 2 -> notePad.searchNote(getLocalDate());
+            case 3 -> notePad.searchNote(getEMail());
+            case 4 -> notePad.searchNote(getWord(), getLocalDate());
+            case 5 -> notePad.searchNote(getWord(), getEMail());
         }
     }
 
     private static void sortNotes() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("""
+                Choose how to sort (enter a number):
+                1. By topic;
+                2. By date;
+                3. By e-mail;
+                4. Exit.""");
+
+        int choose = choicePosition(1, 4);
+
+        switch (choose) {
+            case 1 -> notePad.sortNotesByTopic();
+            case 2 -> notePad.sortNotesByDate();
+            case 3 -> notePad.sortNotesByEmail();
+        }
     }
 
     private static void printNotes() {

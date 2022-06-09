@@ -126,7 +126,7 @@ public class NotePad implements Serializable {
 
     public void sortNotesByTopic() {
         notes.stream()
-                .sorted(Comparator.comparing(Note::getTopic))
+                .sorted(Comparator.comparing(x -> x.getTopic().toLowerCase()))
                 .forEach(System.out::println);
     }
 
@@ -138,7 +138,7 @@ public class NotePad implements Serializable {
 
     public void sortNotesByEmail() {
         notes.stream()
-                .sorted(Comparator.comparing(x -> x.getEMail().toString()))
+                .sorted(Comparator.comparing(x -> x.getEMail().toString().toLowerCase()))
                 .forEach(System.out::println);
     }
 
