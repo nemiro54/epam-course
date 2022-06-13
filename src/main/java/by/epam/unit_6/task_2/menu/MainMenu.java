@@ -1,7 +1,7 @@
 package by.epam.unit_6.task_2.menu;
 
-import by.epam.unit_6.task_2.email.EMail;
 import by.epam.unit_6.task_2.notepad.Note;
+import by.epam.unit_6.task_2.email.EMail;
 import by.epam.unit_6.task_2.notepad.NotePad;
 
 import java.time.LocalDate;
