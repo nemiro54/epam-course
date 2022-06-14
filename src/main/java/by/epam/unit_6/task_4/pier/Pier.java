@@ -27,17 +27,17 @@ public class Pier implements Runnable {
     private void load(Ship ship) {
         while (!ship.isLoaded()) {
             ship.add(100);
-            System.out.println(Thread.currentThread().getName() + " - " + " is loading...");
+            System.out.println(ship + " - " + " is loading...");
         }
-        System.out.println(Thread.currentThread().getName() + " is loaded!");
+        System.out.println(ship + " is loaded!");
 
     }
 
     private void unload(Ship ship) {
         while (!ship.isUnloaded()) {
             ship.get(100);
-            System.out.println(Thread.currentThread().getName() + " is unloading...");
+            System.out.println(ship + " is unloading...");
         }
-        System.out.println(Thread.currentThread().getName() + " is unloaded!");
+        System.out.println(ship + " is unloaded!");
     }
 }

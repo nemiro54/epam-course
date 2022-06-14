@@ -7,16 +7,15 @@ unit_6.task_4: Многопоточность. Порт. Корабли захо
 Корабль может загружаться у причала или разгружаться.
  */
 
+/*
+Task solved by half.
+ */
+
 import by.epam.unit_6.task_4.port.Port;
 import by.epam.unit_6.task_4.ship.ShipGenerator;
 import by.epam.unit_6.task_4.pier.Pier;
 
 import java.util.concurrent.*;
-
-/*
-1. корабли уходят не разгрузившись или не загрузившись
-2. общее количество груза в порту и на корабле
- */
 
 public class Main {
     public static void main(String[] args) {

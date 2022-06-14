@@ -28,6 +28,4 @@ public class ShipGenerator implements Runnable {
         Random random = new Random();
         return ShipCapacity.values()[random.nextInt(ShipCapacity.values().length)];
     }
-
-
 }

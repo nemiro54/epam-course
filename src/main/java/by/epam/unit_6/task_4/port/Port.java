@@ -9,7 +9,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Port {
-    private final BlockingQueue<Ship> shipsQueue = new ArrayBlockingQueue<>(10, true);
+    private final BlockingQueue<Ship> shipsQueue = new ArrayBlockingQueue<>(2, true);
     private int shipCounter = 0;
 
     private final Lock lock = new ReentrantLock();
@@ -19,13 +19,13 @@ public class Port {
         lock.lock();
         try {
             while (true) {
-                if (shipCounter < 10) {
+                if (shipCounter < 2) {
                     condition.signalAll();
                     shipsQueue.put(ship);
-                    System.out.println(shipsQueue.element() + " - " + shipsQueue.size() + ": --> new ship was arrived in the port.");
+                    System.out.println(ship + " - " + shipsQueue.size() + ": --> new ship was arrived in the port.");
                     shipCounter++;
                 } else {
-                    System.out.println(shipsQueue.element() + " - " + shipsQueue.size() + ": --> there is no place for a new ship in the port.");
+                    System.out.println("There is no place for a new ship in the port.");
                     condition.await();
                 }
             }
@@ -44,7 +44,7 @@ public class Port {
                     condition.signalAll();
                     for (Ship ship : shipsQueue) {
                         ship = shipsQueue.take();
-                        System.out.println(shipsQueue.element() + " - " + shipsQueue.size() + ": --> Ship was taken from the port.");
+                        System.out.println(ship + " - " + shipsQueue.size() + ": --> Ship was taken from the port.");
                         shipCounter--;
                         return ship;
                     }
