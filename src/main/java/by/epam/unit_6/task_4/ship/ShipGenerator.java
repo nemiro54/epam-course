@@ -14,6 +14,7 @@ public class ShipGenerator implements Runnable {
     @Override
     public void run() {
         while (true) {
+            Thread.currentThread().setName("Generator ship");
             port.addShip(new Ship(getRandomTarget(), getRandomSize()));
         }
     }
@@ -27,4 +28,6 @@ public class ShipGenerator implements Runnable {
         Random random = new Random();
         return ShipCapacity.values()[random.nextInt(ShipCapacity.values().length)];
     }
+
+
 }

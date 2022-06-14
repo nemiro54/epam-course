@@ -9,18 +9,31 @@ unit_6.task_4: Многопоточность. Порт. Корабли захо
 
 import by.epam.unit_6.task_4.port.Port;
 import by.epam.unit_6.task_4.ship.ShipGenerator;
+import by.epam.unit_6.task_4.pier.Pier;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
+
+/*
+1. корабли уходят не разгрузившись или не загрузившись
+2. общее количество груза в порту и на корабле
+ */
 
 public class Main {
     public static void main(String[] args) {
         Port port = new Port();
         ShipGenerator shipGenerator = new ShipGenerator(port);
 
+        Pier pier1 = new Pier(port);
+        Pier pier2 = new Pier(port);
+        Pier pier3 = new Pier(port);
+
         ExecutorService service = Executors.newCachedThreadPool();
+
         service.execute(shipGenerator);
+        service.execute(pier1);
+        service.execute(pier2);
+        service.execute(pier3);
+
+        service.shutdown();
     }
 }

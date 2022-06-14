@@ -11,7 +11,7 @@ public enum ShipCapacity {
         this.capacity = capacity;
     }
 
-    public int getCapacity() {
+    public int getValue() {
         return capacity;
     }
 }
