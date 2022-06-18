@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class Task17 {
     public static void main(String[] args) throws IOException {
-        String path = "xmlTask17";
+        String path = "src/main/java/by/epam/unit_3/task_17/test.xml";
         BufferedReader reader = new BufferedReader(new FileReader(path));
         String line = reader.readLine();
 

@@ -15,6 +15,7 @@ import java.io.File;
 
 public class Solution {
     public static void main(String[] args) throws IncorrectInputFileException {
-        String text = ReadStringFromFile.read(new File("textForTask16"));
+        String text = ReadStringFromFile.read(new File("src/main/java/by/epam/unit_3/task_16/textForTask16"));
+        System.out.println(text);
     }
 }
