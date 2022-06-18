@@ -1,1 +1,8 @@
-
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cases>
+    <student firstName="1" lastName="2">
+        <email>3</email>
+        <faculty>4</faculty>
+        <course>1</course>
+    </student>
+</cases>

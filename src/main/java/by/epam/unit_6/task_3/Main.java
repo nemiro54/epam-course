@@ -12,12 +12,16 @@ unit_6.task_3: Создайте клиент-серверное приложен
 - Формат хранения данных на сервере - xml-файлы.
  */
 
+import by.epam.unit_6.task_3.server.archive.Case;
+import by.epam.unit_6.task_3.server.xml.XmlReader;
+import by.epam.unit_6.task_3.server.xml.XmlWriter;
 import by.epam.unit_6.task_3.user.User;
-import by.epam.unit_6.task_3.user.UserRole;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        User tutor = new User("tutor", UserRole.TUTOR);
     }
 }
 
