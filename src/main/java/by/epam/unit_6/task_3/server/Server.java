@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Server {
     private static final String ARCHIVE_PATH = "src/main/java/by/epam/unit_6/task_3/server/archive/cases.xml";
@@ -42,7 +43,7 @@ public class Server {
         if ("show case".equals(dataRequest[0])) {
             return showCase(dataRequest[1], dataRequest[2]);
         } else if ("change case".equals(dataRequest[0])) {
-            return changeCase();
+            return changeCase(dataRequest[1], dataRequest[2]);
         } else if ("add new case".equals(dataRequest[0])) {
             return "add new case";
         } else {
@@ -50,11 +51,11 @@ public class Server {
         }
     }
 
-    private static String showCase(String firsName, String lastName) {
+    private static String showCase(String firstName, String lastName) {
         StringBuilder stringCases = new StringBuilder();
 
         for (Case aCase : cases) {
-            if (aCase.getFirstName().equalsIgnoreCase(firsName)
+            if (aCase.getFirstName().equalsIgnoreCase(firstName)
                     && aCase.getLastName().equalsIgnoreCase(lastName)) {
                 stringCases.append(aCase).append("\n");
             }
@@ -63,9 +64,23 @@ public class Server {
         return stringCases.toString();
     }
 
-    private static String changeCase() {
-        System.out.println("change case");
-        return "";
+    private static String changeCase(String firstName, String lastName) {
+        List<Case> changeCases = new ArrayList<>();
+
+        for (Case aCase : cases) {
+            if (aCase.getFirstName().equalsIgnoreCase(firstName)
+                    && aCase.getLastName().equalsIgnoreCase(lastName)) {
+                changeCases.add(aCase);
+            }
+        }
+
+        for (Case changeCase : changeCases) {
+            System.out.print("Enter first name: ");
+            changeCase.setFirstName(new Scanner(System.in).nextLine());
+        }
+
+
+        return "Name changed successfully";
     }
 
     private static void addNewCase() {

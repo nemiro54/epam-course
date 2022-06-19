@@ -33,15 +33,15 @@ public class Client {
         if (userRole == UserRole.TUTOR) {
             action = tutorMenu();
             switch (action) {
-                case 1 -> request = "show case";
-                case 2 -> request = "change case";
-                case 3 -> request = "add new case";
+                case 1 -> request = "show case;" + enterFullName();
+                case 2 -> request = "change case;" + enterFullName();
+                case 3 -> request = "add new case;";
                 case 4 -> request = "exit";
             }
         } else if (userRole == UserRole.STUDENT) {
             action = studentMenu();
             switch (action) {
-                case 1 -> request = "show case" + ";" + enterName();
+                case 1 -> request = "show case;" + enterFullName();
                 case 2 -> request = "exit";
             }
         } else {
@@ -92,7 +92,28 @@ public class Client {
         return choicePosition(1, 2);
     }
 
-    private static String enterName() {
+    private static String changeCase() {
+        System.out.println("""
+                Choose what to change(enter a number):
+                1. First name;
+                2. Last name;
+                3. Email;
+                4. Faculty;
+                5. Course""");
+
+        int choose = choicePosition(1, 5);
+
+        return switch (choose) {
+            case 1 -> enterFirstName();
+            case 2 -> enterLastName();
+            case 3 -> enterEmail();
+            case 4 -> enterFaculty();
+            case 5 -> enterCourse();
+            default -> "";
+        };
+    }
+
+    private static String enterFullName() {
         System.out.print("Enter first name: ");
         String firstName = new Scanner(System.in).nextLine();
         if (firstName.length() == 0) {
@@ -106,6 +127,56 @@ public class Client {
         }
 
         return firstName + ";" + lastName + ";";
+    }
+
+    private static String enterFirstName() {
+        System.out.print("Enter first name: ");
+        String firstName = new Scanner(System.in).nextLine();
+        if (firstName.length() == 0) {
+            firstName = "";
+        }
+
+        return firstName + ";";
+    }
+
+    private static String enterLastName() {
+        System.out.print("Enter last name: ");
+        String lastName = new Scanner(System.in).nextLine();
+        if (lastName.length() == 0) {
+            lastName = "";
+        }
+
+        return lastName + ";";
+    }
+
+    private static String enterEmail() {
+        System.out.print("Enter email: ");
+        String email = new Scanner(System.in).nextLine();
+        if (email.length() == 0) {
+            email = "";
+        }
+
+        return email + ";";
+    }
+
+    private static String enterFaculty() {
+        System.out.print("Enter faculty: ");
+        String faculty = new Scanner(System.in).nextLine();
+        if (faculty.length() == 0) {
+            faculty = "";
+        }
+
+        return faculty + ";";
+    }
+
+    private static String enterCourse() {
+        System.out.print("Enter course: ");
+        String course = new Scanner(System.in).nextLine();
+        if (course.length() == 0) {
+            course = "";
+        }
+
+        return course + ";";
     }
 
     private static UserRole login() {
