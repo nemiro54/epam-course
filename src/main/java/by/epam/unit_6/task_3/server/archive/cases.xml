@@ -5,4 +5,24 @@
         <faculty>4</faculty>
         <course>1</course>
     </student>
+    <student firstName="vlad" lastName="nemiro">
+        <email>nemiro54@gmail.com</email>
+        <faculty>hist</faculty>
+        <course>3</course>
+    </student>
+    <student firstName="vlad" lastName="nemiro">
+        <email>nemiro54@gmail.com</email>
+        <faculty>hist</faculty>
+        <course>3</course>
+    </student>
+    <student firstName="Vlad" lastName="Nemiro">
+        <email>nemiro54@gmail.com</email>
+        <faculty>hist</faculty>
+        <course>3</course>
+    </student>
+    <student firstName="sabina" lastName="buyakova">
+        <email>example@gmail.com</email>
+        <faculty>fmo</faculty>
+        <course>3</course>
+    </student>
 </cases>

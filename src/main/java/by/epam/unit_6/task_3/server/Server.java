@@ -2,7 +2,6 @@ package by.epam.unit_6.task_3.server;
 
 import by.epam.unit_6.task_3.server.archive.Case;
 import by.epam.unit_6.task_3.server.xml.XmlReader;
-import by.epam.unit_6.task_3.user.User;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -27,13 +26,57 @@ public class Server {
                      BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                      BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
                     String request = reader.readLine();
-                    String response = new StringBuffer(request).reverse().toString();
+                    String response = parseAndHandleRequest(request);
 
-                    writer.write(response);
-                    writer.newLine();
-                    writer.flush();
+                    write(writer, response);
                 }
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String parseAndHandleRequest(String request) {
+        String[] dataRequest = request.split(";");
+
+        if ("show case".equals(dataRequest[0])) {
+            return showCase(dataRequest[1], dataRequest[2]);
+        } else if ("change case".equals(dataRequest[0])) {
+            return changeCase();
+        } else if ("add new case".equals(dataRequest[0])) {
+            return "add new case";
+        } else {
+            return "0";
+        }
+    }
+
+    private static String showCase(String firsName, String lastName) {
+        StringBuilder stringCases = new StringBuilder();
+
+        for (Case aCase : cases) {
+            if (aCase.getFirstName().equalsIgnoreCase(firsName)
+                    && aCase.getLastName().equalsIgnoreCase(lastName)) {
+                stringCases.append(aCase).append("\n");
+            }
+        }
+
+        return stringCases.toString();
+    }
+
+    private static String changeCase() {
+        System.out.println("change case");
+        return "";
+    }
+
+    private static void addNewCase() {
+        System.out.println("add new case");
+    }
+
+    private static void write(BufferedWriter writer, String response) {
+        try {
+            writer.write(response);
+            writer.newLine();
+            writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
