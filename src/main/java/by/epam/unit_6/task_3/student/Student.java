@@ -1,4 +1,4 @@
-package by.epam.unit_6.task_3.server.Student;
+package by.epam.unit_6.task_3.student;
 
 public class Student {
     public static final int TRAINING_PERIOD = 4;

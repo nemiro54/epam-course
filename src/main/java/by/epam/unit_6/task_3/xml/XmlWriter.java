@@ -1,7 +1,7 @@
-package by.epam.unit_6.task_3.server.xml;
+package by.epam.unit_6.task_3.xml;
 
-import by.epam.unit_6.task_3.server.archive.Archive;
-import by.epam.unit_6.task_3.server.archive.Case;
+import by.epam.unit_6.task_3.archive.Archive;
+import by.epam.unit_6.task_3.archive.Case;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;

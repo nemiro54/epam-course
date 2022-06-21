@@ -1,12 +1,16 @@
-package by.epam.unit_6.task_3.server.archive;
+package by.epam.unit_6.task_3.archive;
 
-import by.epam.unit_6.task_3.server.Student.StudentStatus;
+import by.epam.unit_6.task_3.student.StudentStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Archive {
     private List<Case> archive = new ArrayList<>();
+
+    public Archive(List<Case> archive) {
+        this.archive = archive;
+    }
 
     public void addDeed(Case aCase) {
         archive.add(aCase);
@@ -123,6 +127,14 @@ public class Archive {
 
     public void print() {
         System.out.println(this);
+    }
+
+    public List<Case> getArchive() {
+        return archive;
+    }
+
+    public void setArchive(List<Case> archive) {
+        this.archive = archive;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package by.epam.unit_6.task_3.server.Student;
+package by.epam.unit_6.task_3.student;
 
 public enum StudentStatus {
     GRADUATED,

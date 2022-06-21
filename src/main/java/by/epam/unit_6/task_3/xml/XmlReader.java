@@ -1,7 +1,7 @@
-package by.epam.unit_6.task_3.server.xml;
+package by.epam.unit_6.task_3.xml;
 
-import by.epam.unit_6.task_3.server.archive.Archive;
-import by.epam.unit_6.task_3.server.archive.Case;
+import by.epam.unit_6.task_3.archive.Archive;
+import by.epam.unit_6.task_3.archive.Case;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
@@ -22,7 +22,7 @@ public class XmlReader {
                 Unmarshaller unmarshaller = context.createUnmarshaller();
                 Archive archive = (Archive) unmarshaller.unmarshal(new InputStreamReader(new FileInputStream(path)));
 
-                return archive.getCases();
+                return archive.getArchive();
             } catch (JAXBException | FileNotFoundException e) {
                 e.printStackTrace();
                 return null;

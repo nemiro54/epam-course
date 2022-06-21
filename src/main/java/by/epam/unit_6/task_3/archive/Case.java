@@ -1,7 +1,7 @@
-package by.epam.unit_6.task_3.server.archive;
+package by.epam.unit_6.task_3.archive;
 
-import by.epam.unit_6.task_3.server.Student.Student;
-import by.epam.unit_6.task_3.server.Student.StudentStatus;
+import by.epam.unit_6.task_3.student.Student;
+import by.epam.unit_6.task_3.student.StudentStatus;
 
 import java.util.Calendar;
 
@@ -72,7 +72,7 @@ public class Case {
         return student.getStudentStatus();
     }
 
-    public void deduct() {
+    public void expelStudent() {
         if (student.getStudentStatus() == StudentStatus.ENROLLED) {
             student.setStudentStatus(StudentStatus.DEDUCTED);
         } else {
@@ -80,7 +80,7 @@ public class Case {
         }
     }
 
-    public void graduate() {
+    public void graduateStudent() {
         if (student.getStudentStatus() == StudentStatus.ENROLLED) {
             student.setStudentStatus(StudentStatus.GRADUATED);
         } else {
@@ -88,7 +88,7 @@ public class Case {
         }
     }
 
-    public void enroll() {
+    public void enrollStudent() {
         if (student.getStudentStatus() != StudentStatus.ENROLLED) {
             student.setStudentStatus(StudentStatus.ENROLLED);
         } else {
