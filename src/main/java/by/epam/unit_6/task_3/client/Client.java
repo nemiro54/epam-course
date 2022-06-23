@@ -1,199 +1,128 @@
 package by.epam.unit_6.task_3.client;
 
-import by.epam.unit_6.task_3.user.User;
 import by.epam.unit_6.task_3.user.UserRole;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) {
-        User tutor = new User("tutor", UserRole.TUTOR);
-        User student = new User("student", UserRole.STUDENT);
-        List<User> users = new ArrayList<>(2) {{
-            add(tutor);
-            add(student);
-        }};
-
-        UserRole userRole = login();
-
-        boolean isConnected;
-        do {
-            isConnected = connectToServer(userRole);
-        } while (isConnected);
-    }
-
-    private static boolean connectToServer(UserRole userRole) {
-        String request = "";
-        int action;
-
-        if (userRole == UserRole.TUTOR) {
-            action = tutorMenu();
-            switch (action) {
-                case 1 -> request = "show case;" + enterFullName();
-                case 2 -> request = "change case;" + enterFullName();
-                case 3 -> request = "add new case;";
-                case 4 -> request = "exit";
-            }
-        } else if (userRole == UserRole.STUDENT) {
-            action = studentMenu();
-            switch (action) {
-                case 1 -> request = "show case;" + enterFullName();
-                case 2 -> request = "exit";
-            }
-        } else {
-            System.out.println("You are not login!");
-        }
-
-        if (request.equals("exit")) {
-            return false;
-        }
-
         try (Socket socket = new Socket("127.0.0.1", 8000);
-             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
 
-            write(writer, request);
-
-            String response;
-
-            while ((response = reader.readLine()).length() != 0) {
-                System.out.println(response);
+            while (socket.isConnected()) {
+                menu(reader, writer);
             }
-
-            System.out.println(response);
-            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
-    private static int tutorMenu() {
-        System.out.println("""
-                Choose action (enter a number):
-                1. Show case;
-                2. Change case;
-                3. Add new case;
-                4. Exit.""");
+    public static void menu(BufferedReader reader, BufferedWriter writer) {
+        Scanner scanner = new Scanner(System.in);
+        String request;
 
-        return choicePosition(1, 4);
-    }
+        System.out.print("Enter login, password and role for authorization: ");
+        request = 1 + ";" + scanner.next() + ";" + scanner.next() + ";" + scanner.next();
+        write(writer, request);
 
-    private static int studentMenu() {
-        System.out.println("""
-                Choose action (enter a number):
-                1. Show case;
-                2. Exit.""");
+        try {
+            int choice = 1;
+            while (choice != 0) {
 
-        return choicePosition(1, 2);
-    }
+                do {
+                    System.out.println(reader.readLine());
+                } while (reader.ready());
 
-    private static String changeCase() {
-        System.out.println("""
-                Choose what to change(enter a number):
-                1. First name;
-                2. Last name;
-                3. Email;
-                4. Faculty;
-                5. Course""");
-
-        int choose = choicePosition(1, 5);
-
-        return switch (choose) {
-            case 1 -> enterFirstName();
-            case 2 -> enterLastName();
-            case 3 -> enterEmail();
-            case 4 -> enterFaculty();
-            case 5 -> enterCourse();
-            default -> "";
-        };
-    }
-
-    private static String enterFullName() {
-        System.out.print("Enter first name: ");
-        String firstName = new Scanner(System.in).nextLine();
-        if (firstName.length() == 0) {
-            firstName = "";
-        }
-
-        System.out.print("Enter last name: ");
-        String lastName = new Scanner(System.in).nextLine();
-        if (lastName.length() == 0) {
-            lastName = "";
-        }
-
-        return firstName + ";" + lastName + ";";
-    }
-
-    private static String enterFirstName() {
-        System.out.print("Enter first name: ");
-        String firstName = new Scanner(System.in).nextLine();
-        if (firstName.length() == 0) {
-            firstName = "";
-        }
-
-        return firstName + ";";
-    }
-
-    private static String enterLastName() {
-        System.out.print("Enter last name: ");
-        String lastName = new Scanner(System.in).nextLine();
-        if (lastName.length() == 0) {
-            lastName = "";
-        }
-
-        return lastName + ";";
-    }
-
-    private static String enterEmail() {
-        System.out.print("Enter email: ");
-        String email = new Scanner(System.in).nextLine();
-        if (email.length() == 0) {
-            email = "";
-        }
-
-        return email + ";";
-    }
-
-    private static String enterFaculty() {
-        System.out.print("Enter faculty: ");
-        String faculty = new Scanner(System.in).nextLine();
-        if (faculty.length() == 0) {
-            faculty = "";
-        }
-
-        return faculty + ";";
-    }
-
-    private static String enterCourse() {
-        System.out.print("Enter course: ");
-        String course = new Scanner(System.in).nextLine();
-        if (course.length() == 0) {
-            course = "";
-        }
-
-        return course + ";";
-    }
-
-    private static UserRole login() {
-        System.out.print("Enter your login: ");
-
-        while (true) {
-            String login = new Scanner(System.in).nextLine();
-
-            switch (login) {
-                case "tutor" -> {
-                    return UserRole.TUTOR;
+                System.out.println("1-Login ");
+                System.out.println("2-View archive ");
+                System.out.println("3-Search for faculty archives ");
+                System.out.println("4-Search archives by course ");
+                System.out.println("5-Search archives by year of enrollment ");
+                System.out.println("--------------------ADMIN MENU-----------------");
+                System.out.println("6-Add Case ");
+                System.out.println("7-Delete case ");
+                System.out.println("8-Delete cases of expelled and graduated students ");
+                System.out.println("9-Choose a case ");
+//                System.out.println("10-Sort cases ");
+                System.out.println("11-Change faculty ");
+                System.out.println("12-Enlarge student course ");
+                System.out.println("13-Change course ");
+//                System.out.println("14-Change admin panel password ");
+                choice = scanner.nextInt();
+                switch (choice) {
+                    case 1 -> {
+                        System.out.println("Enter login, password and role for authorization: ");
+                        request = 1 + ";" + scanner.next() + ";" + scanner.next() + ";" + scanner.next();
+                        write(writer, request);
+                    }
+                    case 2 -> {
+                        request = 2 + ";";
+                        write(writer, request);
+                    }
+                    case 3 -> {
+                        System.out.println("Enter the name of the faculty ");
+                        request = 3 + ";" + scanner.next();
+                        write(writer, request);
+                    }
+                    case 4 -> {
+                        System.out.println("Enter a course to search ");
+                        request = 4 + ";" + scanner.nextInt();
+                        write(writer, request);
+                    }
+                    case 5 -> {
+                        System.out.println("Enter the year of receipt ");
+                        request = 5 + ";" + scanner.nextInt();
+                        write(writer, request);
+                    }
+                    case 6 -> {
+                        System.out.println("Enter student name, faculty, course and year of enrollment ");
+                        request = 6 + ";" + scanner.nextLine() + ";" + scanner.nextLine() + ";" + scanner.nextInt() + ";" + scanner.nextInt();
+                        write(writer, request);
+                    }
+                    case 7 -> {
+                        System.out.println("Enter case number to delete ");
+                        request = 7 + ";" + scanner.nextInt();
+                        write(writer, request);
+                    }
+                    case 8 -> {
+                        request = 8 + ";";
+                        write(writer, request);
+                    }
+                    case 9 -> {
+                        System.out.println("Enter case number to select ");
+                        request = 8 + ";" + scanner.nextInt();
+                        write(writer, request);
+                    }
+//                    case 10 -> {
+//                        request = 10 + ";";
+//                        write(writer, request);
+//                    }
+                    case 11 -> {
+                        System.out.println("Enter a new faculty name ");
+                        request = 11 + ";" + scanner.next();
+                        write(writer, request);
+                    }
+                    case 12 -> {
+                        request = 12 + ";";
+                        write(writer, request);
+                    }
+                    case 13 -> {
+                        System.out.println("Enter course number ");
+                        request = 13 + ";" + scanner.nextInt();
+                        write(writer, request);
+                    }
+//                    case 14 -> {
+//                        System.out.println("Enter the old one, and then after the space, the new password ");
+//                        request = 14 + ";" + scanner.next() + ";" + scanner.next();
+//                        write(writer, request);
+//                    }
                 }
-                case "student" -> {
-                    return UserRole.STUDENT;
-                }
-                default -> System.out.print("Incorrect login! Try again: ");
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -204,18 +133,6 @@ public class Client {
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private static int choicePosition(int min, int max) {
-        Scanner scanner = new Scanner(System.in);
-        int res = scanner.nextInt();
-
-        if (res < min || res > max) {
-            System.out.println("Invalid input! Try again: ");
-            return choicePosition(min, max);
-        } else {
-            return res;
         }
     }
 }

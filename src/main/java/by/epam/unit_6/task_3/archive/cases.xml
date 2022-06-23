@@ -1,28 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<cases>
-    <student firstName="1" lastName="2">
-        <email>3</email>
-        <faculty>4</faculty>
-        <course>1</course>
-    </student>
-    <student firstName="vlad" lastName="nemiro">
-        <email>nemiro54@gmail.com</email>
-        <faculty>hist</faculty>
-        <course>3</course>
-    </student>
-    <student firstName="vlad" lastName="nemiro">
-        <email>nemiro54@gmail.com</email>
-        <faculty>hist</faculty>
-        <course>3</course>
-    </student>
-    <student firstName="Vlad" lastName="Nemiro">
-        <email>nemiro54@gmail.com</email>
-        <faculty>hist</faculty>
-        <course>3</course>
-    </student>
-    <student firstName="sabina" lastName="buyakova">
-        <email>example@gmail.com</email>
-        <faculty>fmo</faculty>
-        <course>3</course>
-    </student>
-</cases>
+<server>
+    <student>src/main/java/by/epam/unit_6/task_3/archive/cases.xml</student>
+</server>

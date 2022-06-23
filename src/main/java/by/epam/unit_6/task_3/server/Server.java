@@ -1,7 +1,12 @@
 package by.epam.unit_6.task_3.server;
 
+import by.epam.unit_6.task_1.cryptographer.Password;
 import by.epam.unit_6.task_3.archive.Case;
 import by.epam.unit_6.task_3.user.User;
+import by.epam.unit_6.task_3.user.UserRole;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -14,13 +19,12 @@ import java.util.List;
 @XmlRootElement(name = "server")
 public class Server {
     @XmlElement(name = "student")
-    private static final String ARCHIVE_PATH = "src/main/java/by/epam/unit_6/task_3/server/archive/cases.xml";
+    private static final String ARCHIVE_PATH = "src/main/java/by/epam/unit_6/task_3/archive/cases.xml";
     private List<User> users = new ArrayList<>();
     private File file;
 
     public Server() {
         file = new File(ARCHIVE_PATH);
-        createFile();
     }
 
     public Server(String pathToFile) {
@@ -29,78 +33,72 @@ public class Server {
         } else {
             file = new File(ARCHIVE_PATH);
         }
-        createFile();
     }
 
-//    public void addUser(String login, String password) {
-//        if (isValidLogin(login)) {
-//            User toAdd = factory.getUser(password, login);
-//            users.add(toAdd);
-//            writeToFile();
-//        }
-//    }
-//
+    public void addUser(String login, String password, UserRole userRole) {
+        if (isLoginUsed(login)) {
+            User user = new User(login, password, userRole);
+            users.add(user);
+            writeToFile();
+        }
+    }
 
-//    public void login(String login, String password) {
-//        if (!isValidLogin(login)) {
-//            int index = 0;
-//            for (int i = 0; i < users.size(); i++) {
-//                if (users.get(i).getLogin().equals(login)) {
-//                    index = i;
-//                    break;
-//                }
-//            }
-//            if (password.equals(users.get(index).getPassword())) {
-//                users.add(users.size(), users.get(index));
-//                users.remove(index);
-//            } else {
-//                System.out.println("Invalid password entered!");
-//            }
-//        } else {
-//            addUser(login, password);
-//        }
-//    }
-//
-//    public void removeUser(User user) {
-//        users.remove(user);
-//        writeToFile();
-//    }
-//
 
-//    private boolean isValidLogin(String login) {
-//        boolean isInvalid = true;
-//        for (User user : users) {
-//            if (user.getLogin().equals(login)) {
-//                isInvalid = false;
-//                break;
-//            }
-//        }
-//        return isInvalid;
-//    }
-    
-//    private void writeToFile() {
-//        try {
-//            JAXBContext context = JAXBContext.newInstance(Server.class);
-//            Marshaller marshaller = context.createMarshaller();
-//            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-//            // сама сериализация
-//            marshaller.marshal(this, file);
-//
-//        } catch (JAXBException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public void login(String login, String password, String userRole) {
+        UserRole role;
+        if (userRole.trim().equalsIgnoreCase("tutor")) {
+            role = UserRole.TUTOR;
+        } else {
+            role = UserRole.STUDENT;
+        }
 
-    private boolean createFile() {
-        if (!file.exists()) {
-            try {
-                return file.createNewFile();
-            } catch (IOException ex) {
-                return false;
+        if (!isLoginUsed(login)) {
+            int index = 0;
+            for (int i = 0; i < users.size(); i++) {
+                if (users.get(i).getLogin().equals(login)) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (Password.checkPassword(password, users.get(index).getPassword())) {
+                users.add(users.size(), users.get(index));
+                users.remove(index);
+            } else {
+                System.out.println("Invalid password entered!");
             }
         } else {
-            cleanFile();
-            return false;
+            addUser(login, password, role);
+        }
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+        writeToFile();
+    }
+
+
+    private boolean isLoginUsed(String login) {
+        boolean isUsed = true;
+        for (User user : users) {
+            if (user.getLogin().equals(login)) {
+                isUsed = false;
+                break;
+            }
+        }
+        return isUsed;
+    }
+
+    private void writeToFile() {
+        try {
+            JAXBContext context = JAXBContext.newInstance(Server.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            // сама сериализация
+            marshaller.marshal(this, file);
+
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -113,10 +111,10 @@ public class Server {
         }
     }
 
-    private String getResult(List<Case> founded) {
+    private String getResult(List<Case> cases) {
         StringBuilder response = new StringBuilder();
-        if (founded.size() > 0) {
-            for (Case aCase : founded) {
+        if (cases.size() > 0) {
+            for (Case aCase : cases) {
                 response.append(aCase.toString());
             }
         } else {
@@ -136,125 +134,81 @@ public class Server {
             int choice = Integer.parseInt(req[0]);
 
             switch (choice) {
-//                case 1: {
-//                    login(req[1].trim(), req[2].trim());
-//                    response = "Operation completed successfully ";
-//                    break;
-//                }
-
-                case 2: {
+                case 1 -> {
+                    login(req[1].trim(), req[2].trim(), req[3].trim());
+                    response = "Operation completed successfully ";
+                }
+                case 2 -> {
                     response = users.get(users.size() - 1).getArchive().toString();
-                    break;
                 }
-
-                case 3: {
+                case 3 -> {
                     response = getResult(users.get(users.size() - 1).findCaseByFaculty(req[1]));
-                    break;
                 }
-
-                case 4: {
+                case 4 -> {
                     response = getResult(users.get(users.size() - 1).findCaseByCourse(Integer.parseInt(req[1])));
-                    break;
                 }
-
-                case 5: {
+                case 5 -> {
                     response = getResult(users.get(users.size() - 1).findCaseByYear(Integer.parseInt(req[1])));
-                    break;
                 }
-
-                case 6: {
+                case 6 -> {
                     if (users.get(users.size() - 1).isTutor()) {
                         (users.get(users.size() - 1)).addCase(req[1], req[2], Integer.parseInt(req[3]), Integer.parseInt(req[4]));
                         response = "Operation completed successfully ";
                     } else {
                         response = "Access denied ";
                     }
-                    break;
                 }
-
-                case 7: {
+                case 7 -> {
                     if (users.get(users.size() - 1).isTutor()) {
                         (users.get(users.size() - 1)).removeCase(Integer.parseInt(req[1]));
                         response = "Operation completed successfully ";
                     } else {
                         response = "Access denied ";
                     }
-                    break;
                 }
-
-                case 8: {
+                case 8 -> {
                     if (users.get(users.size() - 1).isTutor()) {
                         (users.get(users.size() - 1)).removeIfNotEnrolled();
                         response = "Operation completed successfully ";
                     } else {
                         response = "Access denied";
                     }
-                    break;
                 }
-
-                case 9: {
+                case 9 -> {
                     if (users.get(users.size() - 1).isTutor()) {
                         (users.get(users.size() - 1)).chooseCase(Integer.parseInt(req[1]));
                         response = "Operation completed successfully ";
                     } else {
                         response = "Access denied";
                     }
-                    break;
                 }
 
-//                case 10: {
-//                    if (users.get(users.size() - 1).isTutor()) {
-//                        (users.get(users.size() - 1)).sort();
-//                        response = "Operation completed successfully ";
-//                    } else {
-//                        response = "Access denied ";
-//                    }
-//                    break;
-//                }
-
-                case 11: {
+                case 11 -> {
                     if (users.get(users.size() - 1).isTutor()) {
                         (users.get(users.size() - 1)).changeFaculty(req[1]);
                         response = "Operation completed successfully ";
                     } else {
                         response = "Access denied ";
                     }
-                    break;
                 }
-
-                case 12: {
+                case 12 -> {
                     if (users.get(users.size() - 1).isTutor()) {
                         (users.get(users.size() - 1)).incrementCourse();
                         response = "Operation completed successfully";
                     } else {
                         response = "Access denied";
                     }
-                    break;
                 }
-
-                case 13: {
+                case 13 -> {
                     if (users.get(users.size() - 1).isTutor()) {
                         (users.get(users.size() - 1)).changeCourse(Integer.parseInt(req[1]));
                         response = "Operation completed successfully";
                     } else {
                         response = "Access denied";
                     }
-                    break;
                 }
-
-//                case 14: {
-//                    if (users.get(users.size() - 1).isTutor()) {
-//                        (users.get(users.size() - 1)).changePassword(req[1], req[2]);
-//                        response = "Operation completed successfully";
-//                    } else {
-//                        response = "Access denied";
-//                    }
-//                    break;
-//                }
-
-                default: {
+                default -> {
                     response = "Invalid opcode !";
-                    break;
                 }
             }
         } catch (ArrayIndexOutOfBoundsException e) {

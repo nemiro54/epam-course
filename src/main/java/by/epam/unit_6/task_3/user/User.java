@@ -1,5 +1,6 @@
 package by.epam.unit_6.task_3.user;
 
+import by.epam.unit_6.task_1.cryptographer.Password;
 import by.epam.unit_6.task_3.archive.Archive;
 import by.epam.unit_6.task_3.archive.Case;
 
@@ -7,11 +8,13 @@ import java.util.List;
 
 public class User {
     private static Archive archive;
-    private String name;
+    private String login;
+    private String password;
     private UserRole userRole;
 
-    public User(String name, UserRole userRole) {
-        this.name = name;
+    public User(String login, String password, UserRole userRole) {
+        this.login = login;
+        setPassword(password);
         this.userRole = userRole;
     }
 
@@ -71,12 +74,24 @@ public class User {
         return archive;
     }
 
-    public String getName() {
-        return name;
+    public static void setArchive(Archive archive) {
+        User.archive = archive;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = Password.getSaltedHash(password);
     }
 
     public UserRole getUserRole() {
@@ -89,6 +104,6 @@ public class User {
 
     @Override
     public String toString() {
-        return String.format("%s, %s", name, (isTutor()) ? "Tutor" : "Student");
+        return String.format("%s, %s", login, (isTutor()) ? "Tutor" : "Student");
     }
 }
