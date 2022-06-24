@@ -8,23 +8,24 @@ import by.epam.unit_6.task_3_v1.xml.XmlWriter;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.List;
 
 public class Server {
     private static final String USER_DATABASE_PATH = "src/main/java/by/epam/unit_6/task_3_v1/user/userDatabase.xml";
     private static final String ARCHIVE_PATH = "src/main/java/by/epam/unit_6/task_3_v1/archive/archive.xml";
     private static List<User> users;
-    private static List<Case> archive;
+    private static List<Case> cases;
 
     public static void main(String[] args) {
         try {
             users = readUserDatabase();
-            archive = readArchive();
+            cases = readArchive();
 
             startServer();
         } finally {
             writeUserDatabase(users);
-            writeArchive(archive);
+            writeArchive(cases);
         }
     }
 
@@ -34,12 +35,14 @@ public class Server {
                 try (Socket socket = serverSocket.accept();
                      BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
                      BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-                    String request = reader.readLine();
-                    String response = handler(request);
+                    while (socket.isConnected()) {
+                        String request = reader.readLine();
+                        String response = handler(request);
 
-                    writer.write(response);
-                    writer.newLine();
-                    writer.flush();
+                        writer.write(response);
+                        writer.newLine();
+                        writer.flush();
+                    }
                 }
             }
         } catch (IOException e) {
@@ -62,6 +65,7 @@ public class Server {
             switch (choose) {
                 case 0 -> response = isUserExist(request[1], request[2]);
                 case 1 -> response = viewArchive();
+                case 2 -> response = changeArchive(request[1], request[2], request[3], request[4]);
                 default -> response = "INCORRECT REQUEST";
             }
             return response;
@@ -79,13 +83,37 @@ public class Server {
         return "NO";
     }
 
-    private static String viewArchive() {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (Case aCase : archive) {
-            stringBuilder.append(aCase).append("\n");
+    private static boolean isCaseExist(String name) {
+        for (Case aCase : cases) {
+            if (aCase.getStudentName().equalsIgnoreCase(name)) {
+                return true;
+            }
         }
-        return stringBuilder.toString();
+        return false;
+    }
+
+    private static String viewArchive() {
+        if (cases.size() > 0) {
+            StringBuilder response = new StringBuilder();
+            for (Case aCase : cases) {
+                response.append(aCase.toString()).append("\n");
+            }
+            return response.toString();
+        } else {
+            return "Archive is empty!";
+        }
+    }
+
+    private static String changeArchive(String oldName, String name, String faculty, String course) {
+        for (Case aCase : cases) {
+            if (isCaseExist(oldName)) {
+                aCase.setStudentName(name);
+                aCase.setFaculty(faculty);
+                aCase.setCourse(Integer.parseInt(course));
+                return "Data updated successfully";
+            }
+        }
+        return "Student not found";
     }
 
     private static List<User> readUserDatabase() {

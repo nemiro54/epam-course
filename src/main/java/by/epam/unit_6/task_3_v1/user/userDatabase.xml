@@ -5,4 +5,9 @@
         <password>admin</password>
         <userRole>TUTOR</userRole>
     </user>
+    <user>
+        <login>user</login>
+        <password>user</password>
+        <userRole>STUDENT</userRole>
+    </user>
 </users>

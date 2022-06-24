@@ -24,4 +24,17 @@ public class Archive {
     public void setCases(List<Case> cases) {
         this.cases = cases;
     }
+
+    @Override
+    public String toString() {
+        if (cases.size() > 0) {
+            StringBuilder string = new StringBuilder();
+            for (Case aCase : cases) {
+                string.append(aCase.toString()).append("\n");
+            }
+            return string.toString();
+        } else {
+            return "Archive is empty!";
+        }
+    }
 }

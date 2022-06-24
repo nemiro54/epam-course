@@ -6,11 +6,6 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) {
-//        boolean isConnected;
-//
-//        do {
-//            isConnected = connectToServer();
-//        } while (isConnected);
         connectToServer();
     }
 
@@ -19,28 +14,44 @@ public class Client {
              BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))
         ) {
-            menu(reader, writer);
-//            return true;
+            while (socket.isConnected())
+                menu(reader, writer);
         } catch (IOException e) {
             e.printStackTrace();
-//            return false;
         }
     }
 
     private static void menu(BufferedReader reader, BufferedWriter writer) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        String request;
-
-        String[] isLogin = logIn(reader, writer).split(";");
+        String[] arrLogin = logIn(reader, writer).split(";");
 
         while (true) {
-            if (isLogin[0].equals("YES")) {
-                if (isLogin[1].equals("TUTOR")) {
+            if (arrLogin[0].equals("YES")) {
+                if (arrLogin[1].equals("TUTOR")) {
                     String response = showTutorMenu(reader, writer);
                     System.out.println(response);
                 }
+            } else {
+                System.out.println("Wrong login or password");
+                break;
             }
         }
+    }
+
+    private static String showTutorMenu(BufferedReader reader, BufferedWriter writer) throws IOException {
+        System.out.println("""
+                Enter action number:
+                1 - View archive.
+                2 - Change case in the archive.
+                3 - Add a new case to the archive.
+                4 - Add a new User""");
+
+        int choice = choosePosition(1, 4);
+
+        return switch (choice) {
+            case 1 -> viewArchive(reader, writer);
+            case 2 -> changeCase(reader, writer);
+            default -> "Something was wrong";
+        };
     }
 
     private static String logIn(BufferedReader reader, BufferedWriter writer) throws IOException {
@@ -57,32 +68,37 @@ public class Client {
         return response;
     }
 
-    private static String showTutorMenu(BufferedReader reader, BufferedWriter writer) throws IOException {
-        System.out.println("""
-                Enter action number:
-                1 - View archive.
-                2 - Change case in the archive.
-                3 - Add a new case to the archive.
-                4 - Add a new User""");
-
-        int choice = choosePosition(1, 4);
-
-        if (choice == 1) {
-            return viewArchive(reader, writer);
-        } else {
-            return "Something was wrong";
-        }
-    }
-
     private static String viewArchive(BufferedReader reader, BufferedWriter writer) throws IOException {
         String request = 1 + ";";
         sendRequest(writer, request);
 
         StringBuilder response = new StringBuilder();
-        while (!reader.readLine().equals("")) {
-            response.append(reader.readLine());
+
+        while (reader.ready()) {
+            response.append(reader.readLine()).append("\n");
         }
+
         return response.toString();
+    }
+
+    private static String changeCase(BufferedReader reader, BufferedWriter writer) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter student name: ");
+        String oldName = scanner.nextLine();
+
+        System.out.print("Enter new name: ");
+        String name = scanner.nextLine();
+        System.out.print("Enter new faculty: ");
+        String faculty = scanner.nextLine();
+        System.out.print("Enter new course: ");
+        String course = scanner.nextLine();
+
+        String request = String.format("%d;%s;%s;%s;%s;", 2, oldName, name, faculty, course);
+        sendRequest(writer, request);
+
+        String response = reader.readLine();
+        return response;
     }
 
     private static void sendRequest(BufferedWriter writer, String request) throws IOException {
