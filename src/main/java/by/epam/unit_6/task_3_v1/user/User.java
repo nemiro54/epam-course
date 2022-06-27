@@ -1,5 +1,6 @@
 package by.epam.unit_6.task_3_v1.user;
 
+import by.epam.unit_6.task_1.cryptographer.Password;
 import jakarta.xml.bind.annotation.XmlType;
 
 @XmlType(propOrder = {"login", "password", "userRole"})
@@ -30,7 +31,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = Password.getSaltedHash(password);
     }
 
     public UserRole getUserRole() {

@@ -2,12 +2,12 @@
 <users>
     <user>
         <login>admin</login>
-        <password>admin</password>
+        <password>NT01vNpDnYUvtZv5maubWKWyxZF0rJk7USyb8ULP/M4=$RNDSGl3z4de1daTJ0S01I9Gr1F1Mxx6Z1ouCsZbwtuU=</password>
         <userRole>TUTOR</userRole>
     </user>
     <user>
         <login>user</login>
-        <password>user</password>
+        <password>twe5fZWhihJmeAA6M/clJTyBAkeFbRwvptkRWvWxoxk=$f/OLX9CrxyJoIcmWoLY8DvndwcUlS3wtPQlgeOTn8vE=</password>
         <userRole>STUDENT</userRole>
     </user>
 </users>

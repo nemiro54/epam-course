@@ -1,7 +1,9 @@
 package by.epam.unit_6.task_3_v1.server;
 
+import by.epam.unit_6.task_1.cryptographer.Password;
 import by.epam.unit_6.task_3_v1.archive.Case;
 import by.epam.unit_6.task_3_v1.user.User;
+import by.epam.unit_6.task_3_v1.user.UserRole;
 import by.epam.unit_6.task_3_v1.xml.XmlReader;
 import by.epam.unit_6.task_3_v1.xml.XmlWriter;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class Server {
     private static final String USER_DATABASE_PATH = "src/main/java/by/epam/unit_6/task_3_v1/user/userDatabase.xml";
     private static final String ARCHIVE_PATH = "src/main/java/by/epam/unit_6/task_3_v1/archive/archive.xml";
+
     private static List<User> users;
     private static List<Case> cases;
 
@@ -39,14 +42,12 @@ public class Server {
                         String request = reader.readLine();
                         String response = handler(request);
 
-                        writer.write(response);
-                        writer.newLine();
-                        writer.flush();
+                        sendRequest(writer, response);
                     }
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
 
@@ -64,8 +65,10 @@ public class Server {
 
             switch (choose) {
                 case 0 -> response = isUserExist(request[1], request[2]);
-                case 1 -> response = viewArchive();
+                case 1 -> response = viewCase(request[1]);
                 case 2 -> response = changeArchive(request[1], request[2], request[3], request[4]);
+                case 3 -> response = addANewCaseToTheArchive(request[1], request[2], request[3]);
+                case 4 -> response = addANewUser(request[1], request[2], request[3]);
                 default -> response = "INCORRECT REQUEST";
             }
             return response;
@@ -75,30 +78,21 @@ public class Server {
     }
 
     private static String isUserExist(String login, String password) {
-        for (User user : users) {
-            if (user.getLogin().equals(login) && user.getPassword().equals(password)) {
-                return "YES" + ";" + user.getUserRole().toString();
-            }
-        }
-        return "NO";
+        return users.stream()
+                .filter(user -> user.getLogin().equals(login)
+                        && Password.checkPassword(password, user.getPassword()))
+                .findFirst()
+                .map(user -> "YES" + ";" + user.getUserRole().toString())
+                .orElse("NO");
     }
 
     private static boolean isCaseExist(String name) {
-        for (Case aCase : cases) {
-            if (aCase.getStudentName().equalsIgnoreCase(name)) {
-                return true;
-            }
-        }
-        return false;
+        return cases.stream().anyMatch(aCase -> aCase.getStudentName().equalsIgnoreCase(name));
     }
 
-    private static String viewArchive() {
+    private static String viewCase(String studentName) {
         if (cases.size() > 0) {
-            StringBuilder response = new StringBuilder();
-            for (Case aCase : cases) {
-                response.append(aCase.toString()).append("\n");
-            }
-            return response.toString();
+            return cases.stream().filter(x -> x.getStudentName().equalsIgnoreCase(studentName)).toList().toString();
         } else {
             return "Archive is empty!";
         }
@@ -114,6 +108,32 @@ public class Server {
             }
         }
         return "Student not found";
+    }
+
+    private static String addANewCaseToTheArchive(String name, String faculty, String course) {
+        try {
+            cases.add(new Case(name, faculty, Integer.parseInt(course)));
+            return "New case added successfully";
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    private static String addANewUser(String name, String password, String userRole) {
+        UserRole role = userRole.equalsIgnoreCase("tutor") ? UserRole.TUTOR : UserRole.STUDENT;
+
+        try {
+            users.add(new User(name, password, role));
+            return "New user added successfully";
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    private static void sendRequest(BufferedWriter writer, String response) throws IOException {
+        writer.write(response);
+        writer.newLine();
+        writer.flush();
     }
 
     private static List<User> readUserDatabase() {

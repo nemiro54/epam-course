@@ -1,4 +1,4 @@
-package by.epam.unit_6.task_3;
+package by.epam.unit_6.task_3_v1;
 
 /*
 unit_6.task_3: Создайте клиент-серверное приложение "Архив".
@@ -12,10 +12,16 @@ unit_6.task_3: Создайте клиент-серверное приложен
 - Формат хранения данных на сервере - xml-файлы.
  */
 
-//Task is not completed. See task_3_v1.
+/*
+Application launch:
+1. Start Server
+2. Start Client
+3. Default authentication data:
+    TUTOR - admin, admin
+    STUDENT - user, user
+ */
 
 public class Main {
     public static void main(String[] args) {
     }
 }
-
