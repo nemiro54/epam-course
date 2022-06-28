@@ -1,25 +1,25 @@
 package by.epam.unit_6.task_4.ship;
 
 public class Ship {
-    private final ShipTarget target;
-    private final ShipCapacity shipCapacity;
+    private final ShipTarget TARGET;
+    private final ShipCapacity SHIP_CAPACITY;
     private int count;
 
     public Ship(ShipTarget target, ShipCapacity capacity) {
-        this.target = target;
-        this.shipCapacity = capacity;
+        this.TARGET = target;
+        this.SHIP_CAPACITY = capacity;
     }
 
-    public void add(int count) {
+    public void addCargo(int count) {
         this.count += count;
     }
 
-    public void get(int count) {
+    public void getCargo(int count) {
         this.count -= count;
     }
 
     public boolean isLoaded() {
-        return count >= shipCapacity.getValue();
+        return count >= SHIP_CAPACITY.getValue();
     }
 
     public boolean isUnloaded() {
@@ -27,11 +27,11 @@ public class Ship {
     }
 
     public ShipTarget getTarget() {
-        return target;
+        return TARGET;
     }
 
     public ShipCapacity getShipCapacity() {
-        return shipCapacity;
+        return SHIP_CAPACITY;
     }
 
     public int getCount() {
@@ -41,8 +41,8 @@ public class Ship {
     @Override
     public String toString() {
         return "Ship{" +
-                "target=" + target +
-                ", shipCapacity=" + shipCapacity +
+                "target=" + TARGET +
+                ", shipCapacity=" + SHIP_CAPACITY +
                 '}';
     }
 }

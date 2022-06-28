@@ -7,19 +7,17 @@ unit_6.task_4: Многопоточность. Порт. Корабли захо
 Корабль может загружаться у причала или разгружаться.
  */
 
-/*
-Task solved by half.
- */
-
+import by.epam.unit_6.task_4.pier.Pier;
 import by.epam.unit_6.task_4.port.Port;
 import by.epam.unit_6.task_4.ship.ShipGenerator;
-import by.epam.unit_6.task_4.pier.Pier;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) {
         Port port = new Port();
+
         ShipGenerator shipGenerator = new ShipGenerator(port);
 
         Pier pier1 = new Pier(port);

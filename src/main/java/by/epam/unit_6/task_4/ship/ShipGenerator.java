@@ -4,18 +4,18 @@ import by.epam.unit_6.task_4.port.Port;
 
 import java.util.Random;
 
-public class ShipGenerator implements Runnable {
-    private final Port port;
-
-    public ShipGenerator(Port port) {
-        this.port = port;
-    }
+public record ShipGenerator(Port port) implements Runnable {
 
     @Override
     public void run() {
         while (true) {
-            Thread.currentThread().setName("Generator ship");
-            port.addShip(new Ship(getRandomTarget(), getRandomSize()));
+            try {
+                Thread.currentThread().setName("Generator ship");
+                port.addShip(new Ship(getRandomTarget(), getRandomSize()));
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException();
+            }
         }
     }
 

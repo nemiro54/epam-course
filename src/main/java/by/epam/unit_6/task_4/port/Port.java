@@ -4,64 +4,94 @@ import by.epam.unit_6.task_4.ship.Ship;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Port {
-    private final BlockingQueue<Ship> shipsQueue = new ArrayBlockingQueue<>(2, true);
-    private int shipCounter = 0;
+    private static final int PORT_CAPACITY = 50000;
+    private final BlockingQueue<Ship> SHIPS_QUEUE = new ArrayBlockingQueue<>(5, true);
+    private final Lock LOCK = new ReentrantLock();
+    private final Condition CONDITION = LOCK.newCondition();
 
-    private final Lock lock = new ReentrantLock();
-    private final Condition condition = lock.newCondition();
+    private AtomicInteger currentLoad = new AtomicInteger(0);
+    private AtomicInteger shipCounter = new AtomicInteger(0);
 
     public void addShip(Ship ship) {
-        lock.lock();
+        LOCK.lock();
         try {
             while (true) {
-                if (shipCounter < 2) {
-                    condition.signalAll();
-                    shipsQueue.put(ship);
-                    System.out.println(ship + " - " + shipsQueue.size() + ": --> new ship was arrived in the port.");
-                    shipCounter++;
+                if (shipCounter.get() < 2) {
+                    CONDITION.signalAll();
+                    SHIPS_QUEUE.put(ship);
+                    System.out.println(ship + " - " + SHIPS_QUEUE.size() + ": --> new ship was arrived in the port.");
+                    shipCounter.getAndIncrement();
                 } else {
                     System.out.println("There is no place for a new ship in the port.");
-                    condition.await();
+                    CONDITION.await();
                 }
+                Thread.sleep(3000);
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         } finally {
-            lock.unlock();
+            LOCK.unlock();
         }
     }
 
     public Ship getShip() {
-        lock.lock();
+        LOCK.lock();
         try {
             while (true) {
-                if (shipCounter > 0) {
-                    condition.signalAll();
-                    for (Ship ship : shipsQueue) {
-                        ship = shipsQueue.take();
-                        System.out.println(ship + " - " + shipsQueue.size() + ": --> Ship was taken from the port.");
-                        shipCounter--;
+                if (shipCounter.get() > 0) {
+                    CONDITION.signalAll();
+                    for (Ship ship : SHIPS_QUEUE) {
+                        ship = SHIPS_QUEUE.take();
+                        System.out.println(ship + " - " + SHIPS_QUEUE.size() + ": --> Ship was taken from the port.");
+                        shipCounter.getAndDecrement();
                         return ship;
                     }
                 } else {
                     System.out.println("The port is empty!");
-                    condition.await();
+                    CONDITION.await();
                 }
+                Thread.sleep(3000);
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         } finally {
-            lock.unlock();
+            LOCK.unlock();
         }
-        return null;
     }
 
-    public BlockingQueue<Ship> getShipsQueue() {
-        return shipsQueue;
+    public synchronized void incrementCurrentLoad(int value) {
+        currentLoad.addAndGet(value);
+    }
+
+    public synchronized void decrementCurrentLoad(int value) {
+        int tmp = currentLoad.get();
+        tmp -= value;
+        currentLoad.set(value);
+    }
+
+    public int getPORT_CAPACITY() {
+        return PORT_CAPACITY;
+    }
+
+    public AtomicInteger getShipCounter() {
+        return shipCounter;
+    }
+
+    public void setShipCounter(AtomicInteger shipCounter) {
+        this.shipCounter = shipCounter;
+    }
+
+    public AtomicInteger getCurrentLoad() {
+        return currentLoad;
+    }
+
+    public void setCurrentLoad(AtomicInteger currentLoad) {
+        this.currentLoad = currentLoad;
     }
 }
