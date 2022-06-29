@@ -91,7 +91,7 @@ public class Server {
     }
 
     private static String viewCase(String studentName) {
-        if (cases.size() > 0) {
+        if (!cases.isEmpty()) {
             return cases.stream().filter(x -> x.getStudentName().equalsIgnoreCase(studentName)).toList().toString();
         } else {
             return "Archive is empty!";

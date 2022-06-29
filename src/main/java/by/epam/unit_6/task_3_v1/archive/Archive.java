@@ -27,7 +27,7 @@ public class Archive {
 
     @Override
     public String toString() {
-        if (cases.size() > 0) {
+        if (!cases.isEmpty()) {
             StringBuilder string = new StringBuilder();
             for (Case aCase : cases) {
                 string.append(aCase.toString()).append("\n");

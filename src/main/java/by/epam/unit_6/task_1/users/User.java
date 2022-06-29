@@ -16,8 +16,8 @@ public class User {
     private String eMail;
     private String password;
     private Role role;
-    private final static String usersFilePath = "src/main/java/by/epam/unit_6/task_1/users/users";
-    private final static String booksPathCatalog = Book.getBooksFilePath();
+    private final static String USERS_FILE_PATH = "src/main/java/by/epam/unit_6/task_1/users/users";
+    private final static String BOOKS_PATH_CATALOG = Book.getBooksFilePath();
 
     public User(String nickName, String eMail, String password, Role role) {
         setNickName(nickName);
@@ -31,15 +31,15 @@ public class User {
     }
 
     public void addBook(Book book) {
-        UserUtil.addBook(this, book, booksPathCatalog);
+        UserUtil.addBook(this, book, BOOKS_PATH_CATALOG);
     }
 
     public void addBook(EBook eBook) {
-        UserUtil.addBook(this, eBook, booksPathCatalog);
+        UserUtil.addBook(this, eBook, BOOKS_PATH_CATALOG);
     }
 
     public void deleteBook(Book book) {
-        UserUtil.deleteBook(this, book, booksPathCatalog);
+        UserUtil.deleteBook(this, book, BOOKS_PATH_CATALOG);
     }
 
     public void suggestBook(Book book) {
@@ -47,23 +47,23 @@ public class User {
     }
 
     public void viewCatalog() {
-        UserUtil.viewBookCatalog(booksPathCatalog);
+        UserUtil.viewBookCatalog(BOOKS_PATH_CATALOG);
     }
 
     public void searchBook(String title) {
-        UserUtil.searchBook(title, booksPathCatalog);
+        UserUtil.searchBook(title, BOOKS_PATH_CATALOG);
     }
 
     public void searchBook(Author author) {
-        UserUtil.searchBook(author, booksPathCatalog);
+        UserUtil.searchBook(author, BOOKS_PATH_CATALOG);
     }
 
     public void searchBook(Publisher publisher) {
-        UserUtil.searchBook(publisher, booksPathCatalog);
+        UserUtil.searchBook(publisher, BOOKS_PATH_CATALOG);
     }
 
     public void searchBook(Integer year) {
-        UserUtil.searchBook(year, booksPathCatalog);
+        UserUtil.searchBook(year, BOOKS_PATH_CATALOG);
     }
 
     private boolean checkNickName(String nickName) {
@@ -87,7 +87,7 @@ public class User {
     private boolean isNickNameUsed(String nickName) {
         Pattern pattern = Pattern.compile("&nickName=" + nickName + "&");
         Matcher matcher;
-        try (BufferedReader reader = new BufferedReader(new FileReader(usersFilePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(USERS_FILE_PATH))) {
             while (reader.ready()) {
                 matcher = pattern.matcher(reader.readLine());
                 if (matcher.find()) {
@@ -103,7 +103,7 @@ public class User {
     private boolean isEMailUsed(String eMail) {
         Pattern pattern = Pattern.compile("&eMail=" + eMail + "&");
         Matcher matcher;
-        try (BufferedReader reader = new BufferedReader(new FileReader(usersFilePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(USERS_FILE_PATH))) {
             while (reader.ready()) {
                 matcher = pattern.matcher(reader.readLine());
 
@@ -193,7 +193,7 @@ public class User {
     }
 
     public static String getUsersFilePath() {
-        return usersFilePath;
+        return USERS_FILE_PATH;
     }
 
     @Override

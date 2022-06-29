@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class XmlReader {
@@ -27,10 +28,10 @@ public class XmlReader {
                 return archive.getCases();
             } catch (JAXBException | FileNotFoundException e) {
                 e.printStackTrace();
-                return null;
+                return new ArrayList<>();
             }
         } else {
-            return null;
+            return new ArrayList<>();
         }
     }
 
@@ -46,10 +47,10 @@ public class XmlReader {
                 return userDatabase.getUsers();
             } catch (JAXBException | FileNotFoundException e) {
                 e.printStackTrace();
-                return null;
+                return new ArrayList<>();
             }
         } else {
-            return null;
+            return new ArrayList<>();
         }
     }
 }

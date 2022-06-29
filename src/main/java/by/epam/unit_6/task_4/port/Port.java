@@ -70,12 +70,10 @@ public class Port {
     }
 
     public synchronized void decrementCurrentLoad(int value) {
-        int tmp = currentLoad.get();
-        tmp -= value;
-        currentLoad.set(value);
+        currentLoad.set(currentLoad.get() - value);
     }
 
-    public int getPORT_CAPACITY() {
+    public int getPortCapacity() {
         return PORT_CAPACITY;
     }
 

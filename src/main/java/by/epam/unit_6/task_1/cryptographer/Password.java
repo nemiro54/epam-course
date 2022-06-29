@@ -9,13 +9,13 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 
 public class Password {
-    private final static int iterations = 20 * 1000;
-    private final static int saltLength = 32;
-    private final static int desiredLength = 256;
+    private final static int ITERATIONS = 20 * 1000;
+    private final static int SALT_LENGTH = 32;
+    private final static int DESIRED_LENGTH = 256;
 
     public static String getSaltedHash(String password) {
         try {
-            byte[] salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(saltLength);
+            byte[] salt = SecureRandom.getInstance("SHA1PRNG").generateSeed(SALT_LENGTH);
             return Base64.getEncoder().encodeToString(salt) + "$" + hash(password, salt);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -42,7 +42,7 @@ public class Password {
         try {
             SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
             SecretKey key = secretKeyFactory.generateSecret(
-                    new PBEKeySpec(password.toCharArray(), salt, iterations, desiredLength));
+                    new PBEKeySpec(password.toCharArray(), salt, ITERATIONS, DESIRED_LENGTH));
 
             return Base64.getEncoder().encodeToString(key.getEncoded());
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {

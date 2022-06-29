@@ -99,8 +99,7 @@ public class Client {
         String request = 0 + ";" + login + ";" + password + ";";
         sendRequest(writer, request);
 
-        String response = reader.readLine();
-        return response;
+        return reader.readLine();
     }
 
     private static String viewCase(BufferedReader reader, BufferedWriter writer) throws IOException {
@@ -111,8 +110,7 @@ public class Client {
         String request = 1 + ";" + studentName + ";";
         sendRequest(writer, request);
 
-        String response = reader.readLine();
-        return response;
+        return reader.readLine();
     }
 
     private static String changeCase(BufferedReader reader, BufferedWriter writer) throws IOException {
@@ -131,8 +129,7 @@ public class Client {
         String request = String.format("%d;%s;%s;%s;%s;", 2, oldName, name, faculty, course);
         sendRequest(writer, request);
 
-        String response = reader.readLine();
-        return response;
+        return reader.readLine();
     }
 
     private static String addANewCaseToTheArchive(BufferedReader reader, BufferedWriter writer) throws IOException {
@@ -148,8 +145,7 @@ public class Client {
         String request = String.format("%d;%s;%s;%s;", 3, name, faculty, course);
         sendRequest(writer, request);
 
-        String response = reader.readLine();
-        return response;
+        return reader.readLine();
     }
 
     private static String addANewUser(BufferedReader reader, BufferedWriter writer) throws IOException {
@@ -165,8 +161,7 @@ public class Client {
         String request = String.format("%d;%s;%s;%s;", 4, login, password, userRole);
         sendRequest(writer, request);
 
-        String response = reader.readLine();
-        return response;
+        return reader.readLine();
     }
 
     private static void sendRequest(BufferedWriter writer, String request) throws IOException {

@@ -8,7 +8,7 @@ public class Book {
     private Author author;
     private Publisher publisher;
     private int publishingYear;
-    private final static String booksFilePath = "src/main/java/by/epam/unit_6/task_1/books_catalog/booksCatalog";
+    private final static String BOOKS_FILE_PATH = "src/main/java/by/epam/unit_6/task_1/books_catalog/booksCatalog";
 
     public Book(String title, Author author, Publisher publisher, int publishingYear) {
         this.title = title;
@@ -50,7 +50,7 @@ public class Book {
     }
 
     public static String getBooksFilePath() {
-        return booksFilePath;
+        return BOOKS_FILE_PATH;
     }
 
     @Override

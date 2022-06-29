@@ -11,11 +11,12 @@ import by.epam.unit_6.task_4.pier.Pier;
 import by.epam.unit_6.task_4.port.Port;
 import by.epam.unit_6.task_4.ship.ShipGenerator;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         Port port = new Port();
 
         ShipGenerator shipGenerator = new ShipGenerator(port);

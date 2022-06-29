@@ -16,21 +16,6 @@ unit_6.task_1: Создать консольное приложение "Уче�
 - Данные аутентификации пользователей хранятся в текстовом файле. Пароль не хранится в открытом виде.
  */
 
-import by.epam.unit_6.task_1.books_catalog.author.Author;
-import by.epam.unit_6.task_1.books_catalog.books.Book;
-import by.epam.unit_6.task_1.books_catalog.books.EBook;
-import by.epam.unit_6.task_1.books_catalog.publisher.Publisher;
-import by.epam.unit_6.task_1.mail_sender.EMailSender;
-import by.epam.unit_6.task_1.users.Role;
-import by.epam.unit_6.task_1.users.User;
-import by.epam.unit_6.task_1.users.UserUtil;
-
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
     }
